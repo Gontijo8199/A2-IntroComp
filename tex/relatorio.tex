@@ -60,7 +60,7 @@ def queryconn(database, query):
 \end{lstlisting}
 \subsection*{Questão 1}
 \begin{lstlisting}
-\cite{ref1}
+
 def questao1():
     dsessao = queryconn(PATH / 'bilheteria.db', 'SELECT * FROM sessao')
     dfsessao = dsessao.groupby(by=['filme_id'])['publico'].sum().reset_index()
@@ -74,7 +74,11 @@ def questao1():
 \subsection*{Questão 4}
 \subsection*{Questão 5}
 
-\bibliographystyle{ieeetr}
-\bibliography{relatorio}
+\begin{thebibliography}{99}
+
+\bibitem{ref1}
+Autor, A. (Ano). \textit{Título do Livro}. Editora.
+
+\end{thebibliography}
 
 \end{document}

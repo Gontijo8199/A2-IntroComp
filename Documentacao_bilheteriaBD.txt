@@ -1,0 +1,20 @@
+['distribuidora', 'filme', 'grupo_exibidor', 'exibidor', 'complexo', 'sala', 'sessao']
+
+
+ distribuidora
+Index(['id', 'nome', 'cnpj'], dtype='object')
+
+ grupo_exibidor
+Index(['id'], dtype='object')
+
+ exibidor
+Index(['id', 'from_grupo'], dtype='object')
+
+ complexo
+Index(['id', 'municipio', 'UF', 'from_exibidor'], dtype='object')
+
+ sala
+Index(['id', 'nome', 'from_complexo'], dtype='object')
+
+ sessao
+Index(['id', 'filme_id', 'sala_id', 'publico', 'data_exibicao'], dtype='object')

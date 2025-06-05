@@ -3,19 +3,9 @@ AUTORES = ['Nathan Loose Kuipper', 'Rafael Gontijo Ferreira']
 import pandas as pd 
 import sqlite3
 from pathlib import Path
+import ModuloA2 as a2
 
 PATH =  Path(__file__).parent # bilheteria.db na mesma pasta que esse arquivo
-
-def queryconn(database, query):
-    with sqlite3.connect(database) as conn:
-        cursor = conn.cursor()
-        cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-        tables = cursor.fetchall()
-
-        df = pd.read_sql_query(query, conn)
-        
-        return df
-    
 
 
 '''
@@ -26,10 +16,10 @@ filmes listados?
 
 def questao1():
     
-    dsessao = queryconn(PATH / 'bilheteria.db', 'SELECT * FROM sessao')
+    dsessao = a2.carrega_tabela(PATH / 'bilheteria.db', 'sessao')
     dfsessao = dsessao.groupby(by=['filme_id'])['publico'].sum().reset_index()
 
-    dfilme = queryconn(PATH / 'bilheteria.db', 'SELECT * FROM filme')
+    dfilme = a2.carrega_tabela(PATH / 'bilheteria.db', 'filme')
     
     map_titulo = lambda x: dfilme.loc[dfilme['id'] == x, 'titulo_original'].item()
     dfsessao['filme_id'] =  dfsessao['filme_id'].map(map_titulo).astype(str)
@@ -41,8 +31,8 @@ def questao1():
 '''
 
 def questao2():
-    dfilme = queryconn(PATH / 'bilheteria.db', 'select * from filme')
-    dsessao = queryconn(PATH / 'bilheteria.db', 'select * from sessao')
+    dfilme = a2.carrega_tabela(PATH / 'bilheteria.db', 'filme')
+    dsessao = a2.carrega_tabela(PATH / 'bilheteria.db', 'sessao')
     
     dfsessao = dsessao.groupby(by=['filme_id'])['publico'].sum().reset_index()
     
@@ -60,7 +50,7 @@ def questao2():
             'publico': int(most_viewed_film['publico'])
         }
     
-    return dic
+    return dic # modo de retorno não especificado, vou priorizar dicionario para caso precise separar por pais (key)
 
 
     
@@ -81,8 +71,9 @@ com as colunas CIDADE, FILME e BILHETERIA.
 '''
 
 def questao4():
-    resultado = 0 
-    return resultado
+    return 0
+    
+    
 
 '''
 5. Quais as cidades com as maiores bilheterias para filmes brasileiros? Ao
@@ -97,10 +88,11 @@ def questao5():
 
 def main():
     # questao1()
-    # print("Questão 1: \n", questao1())
+    #print("Questão 1: \n", questao1())
     # questao2()
-    # print("Questão 2: \n", questao())
+    #print("Questão 2: \n", questao2())
     
+    questao4()
     return 0
 
 if __name__ == '__main__':
