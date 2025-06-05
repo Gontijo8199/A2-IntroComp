@@ -1,0 +1,80 @@
+\documentclass{article}
+
+\usepackage[portuguese]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{cite}
+
+\lstset{
+  language=Python,
+  basicstyle=\ttfamily\small,
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{orange},
+  breaklines=true,
+  frame=single,
+  columns=flexible
+}
+
+\title{Avaliação 2 de Introdução a Computação}
+\author{Nathan Loose Kuipper \\ Rafael Gontijo Ferreira}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Resumo do trabalho % TO-DO
+\end{abstract}
+
+\section{Introdução}
+Introdução do trabalho.
+
+\section{Análise do Código}
+Introdução da Análise do Código
+\subsection*{Funções Auxiliares e Trechos Importantes}
+
+Path:
+\begin{lstlisting}
+from pathlib import Path
+
+PATH =  Path(__file__).parent # bilheteria.db na mesma pasta que esse arquivo
+\end{lstlisting}
+Função de conexão a base de dados:
+\begin{lstlisting}
+def queryconn(database, query):
+    with sqlite3.connect(database) as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+        tables = cursor.fetchall()
+      
+        df = pd.read_sql_query(query, conn)
+        
+        return df
+\end{lstlisting}
+\subsection*{Questão 1}
+\begin{lstlisting}
+\cite{ref1}
+def questao1():
+    dsessao = queryconn(PATH / 'bilheteria.db', 'SELECT * FROM sessao')
+    dfsessao = dsessao.groupby(by=['filme_id'])['publico'].sum().reset_index()
+    dfilme = queryconn(PATH / 'bilheteria.db', 'SELECT * FROM filme')
+    map_titulo = lambda x: dfilme.loc[dfilme['id'] == x, 'titulo_original'].item()
+    dfsessao['filme_id'] =  dfsessao['filme_id'].map(map_titulo).astype(str)
+    return dfsessao
+\end{lstlisting}
+\subsection*{Questão 2}
+\subsection*{Questão 3}
+\subsection*{Questão 4}
+\subsection*{Questão 5}
+
+\bibliographystyle{ieeetr}
+\bibliography{relatorio}
+
+\end{document}
