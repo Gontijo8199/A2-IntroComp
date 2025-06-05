@@ -38,40 +38,125 @@ Introdução do trabalho.
 
 \section{Análise do Código}
 Introdução da Análise do Código
-\subsection*{Funções Auxiliares e Trechos Importantes}
-
+\subsection*{Módulo Auxiliar A2}
+Módulo que contém funções para auxiliar no manejo da base de dados
 Path:
 \begin{lstlisting}
+
+AUTORES = ['Nathan Loose Kuipper', 'Rafael Gontijo Ferreira']
+
+import pandas as pd 
+import sqlite3
 from pathlib import Path
 
 PATH =  Path(__file__).parent # bilheteria.db na mesma pasta que esse arquivo
-\end{lstlisting}
-Função de conexão a base de dados:
-\begin{lstlisting}
+
 def queryconn(database, query):
     with sqlite3.connect(database) as conn:
         cursor = conn.cursor()
         cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
         tables = cursor.fetchall()
-      
+
         df = pd.read_sql_query(query, conn)
         
         return df
+    
+def carrega_tabela(database, tabela):
+
+    with sqlite3.connect(database) as conn:
+        query = f"SELECT * FROM {tabela}"
+        df = pd.read_sql_query(query, conn)
+    return df
+
+def lista_tabelas(db_filename):
+
+    # Connect to the SQLite database
+    # conn = sqlite3.connect(db_filename)
+    with sqlite3.connect(db_filename) as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+        tables = cursor.fetchall()
+
+        table_row_counts = []
+        for table in tables:
+            table_name = table[0]
+            query = f"SELECT COUNT(*) FROM {table_name};"
+            cursor.execute(query)
+            row_count = cursor.fetchone()[0]
+            table_row_counts.append({"Table": table_name, "Row_Count": row_count})
+
+        return pd.DataFrame(table_row_counts)
+    
+if __name__ == '__main__':
+    print("Importe esse modulo para auxilar com o manejo da base de dados!")
 \end{lstlisting}
 \subsection*{Questão 1}
 \begin{lstlisting}
-
 def questao1():
-    dsessao = queryconn(PATH / 'bilheteria.db', 'SELECT * FROM sessao')
+    
+    dsessao = a2.carrega_tabela(PATH / 'bilheteria.db', 'sessao')
     dfsessao = dsessao.groupby(by=['filme_id'])['publico'].sum().reset_index()
-    dfilme = queryconn(PATH / 'bilheteria.db', 'SELECT * FROM filme')
+
+    dfilme = a2.carrega_tabela(PATH / 'bilheteria.db', 'filme')
+    
     map_titulo = lambda x: dfilme.loc[dfilme['id'] == x, 'titulo_original'].item()
     dfsessao['filme_id'] =  dfsessao['filme_id'].map(map_titulo).astype(str)
+    
     return dfsessao
 \end{lstlisting}
 \subsection*{Questão 2}
+
+\begin{lstlisting}
+  def questao2():
+    dfilme = a2.carrega_tabela(PATH / 'bilheteria.db', 'filme')
+    dsessao = a2.carrega_tabela(PATH / 'bilheteria.db', 'sessao')
+    
+    dfsessao = dsessao.groupby(by=['filme_id'])['publico'].sum().reset_index()
+    
+    merged_df = dfilme.merge(dfsessao, left_on='id', right_on='filme_id', how='left')
+    
+    merged_df['publico'] = merged_df['publico'].fillna(0)
+    
+    paises = merged_df['pais_origem'].unique()
+    dic = {}
+    
+    for pais in paises:
+        most_viewed_film = merged_df[merged_df['pais_origem'] == pais].sort_values(by='publico', ascending=False).iloc[0]
+        dic[pais] = {
+            'nome': dfilme.loc[dfilme['id'] == most_viewed_film['filme_id'], 'titulo_original'].item(),
+            'publico': int(most_viewed_film['publico'])
+        }
+    
+    return dic
+\end{lstlisting}
 \subsection*{Questão 3}
 \subsection*{Questão 4}
+
+\begin{lstlisting}
+  def questao4():
+    
+    dsessao = a2.carrega_tabela(PATH / 'bilheteria.db', 'sessao')
+    dsala = a2.carrega_tabela(PATH / 'bilheteria.db', 'sala')[['id', 'from_complexo']]
+    dcomplexo = a2.carrega_tabela(PATH / 'bilheteria.db', 'complexo')[['id', 'municipio']]
+
+    dfilme = a2.carrega_tabela(PATH / 'bilheteria.db', 'filme')[['id', 'titulo_original']]
+
+    df = dsessao.merge(dsala, left_on='sala_id', right_on='id', how='left')
+    df = df.rename(columns={'id_x': 'sessao_id', 'id_y': 'sala_id'})  
+
+    df = df.merge(dcomplexo, left_on='from_complexo', right_on='id', how='left')
+    df = df.rename(columns={'municipio': 'CIDADE'})
+    
+    df = df.merge(dfilme, left_on='filme_id', right_on='id', how='left')
+    df = df.rename(columns={'titulo_original': 'FILME'})
+
+    bilheteria = df.groupby(['CIDADE', 'FILME'], as_index=False)['publico'].sum()
+    bilheteria = bilheteria.rename(columns={'publico': 'BILHETERIA'})
+
+    resultado = bilheteria.sort_values('BILHETERIA', ascending=False).groupby('CIDADE').head(1)
+
+    return resultado[['CIDADE', 'FILME', 'BILHETERIA']]
+\end{lstlisting}
 \subsection*{Questão 5}
 
 \begin{thebibliography}{99}

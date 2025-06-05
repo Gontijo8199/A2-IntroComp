@@ -71,7 +71,30 @@ com as colunas CIDADE, FILME e BILHETERIA.
 '''
 
 def questao4():
-    return 0
+    
+    dsessao = a2.carrega_tabela(PATH / 'bilheteria.db', 'sessao')
+    dsala = a2.carrega_tabela(PATH / 'bilheteria.db', 'sala')[['id', 'from_complexo']]
+    dcomplexo = a2.carrega_tabela(PATH / 'bilheteria.db', 'complexo')[['id', 'municipio']]
+
+    dfilme = a2.carrega_tabela(PATH / 'bilheteria.db', 'filme')[['id', 'titulo_original']]
+
+    df = dsessao.merge(dsala, left_on='sala_id', right_on='id', how='left')
+    df = df.rename(columns={'id_x': 'sessao_id', 'id_y': 'sala_id'})  
+
+    df = df.merge(dcomplexo, left_on='from_complexo', right_on='id', how='left')
+    df = df.rename(columns={'municipio': 'CIDADE'})
+    
+    df = df.merge(dfilme, left_on='filme_id', right_on='id', how='left')
+    df = df.rename(columns={'titulo_original': 'FILME'})
+
+    bilheteria = df.groupby(['CIDADE', 'FILME'], as_index=False)['publico'].sum()
+    bilheteria = bilheteria.rename(columns={'publico': 'BILHETERIA'})
+
+    resultado = bilheteria.sort_values('BILHETERIA', ascending=False).groupby('CIDADE').head(1)
+
+    return resultado[['CIDADE', 'FILME', 'BILHETERIA']]
+
+
     
     
 
@@ -92,7 +115,8 @@ def main():
     # questao2()
     #print("Questão 2: \n", questao2())
     
-    questao4()
+    #questao4()
+    #print("Questão 4: \n", questao4())
     return 0
 
 if __name__ == '__main__':
