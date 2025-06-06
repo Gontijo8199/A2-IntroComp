@@ -1,0 +1,6 @@
+pandas
+matplotlib
+sqlite3
+numpy
+seaborn
+pathlib

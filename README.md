@@ -5,13 +5,16 @@
 Este repositório contém o trabalho da Avaliação 2 da disciplina de Introdução à Computação. O objetivo deste trabalho é analisar dados de bilheteira de filmes, utilizando Python e SQLite para manipulação e consulta de dados.
 
 ## Estrutura do Projeto
-- `bilheteria.db`: Banco de dados SQLite contendo informações sobre filmes, sessões e bilheteira.
-- `script.py`: Script principal em Python que contém as funções para realizar as análises solicitadas.
-- `tex/relatorio.bib`: Arquivo de referências bibliográficas (se aplicável).
+- `source/bilheteria.db`: Banco de dados SQLite contendo informações sobre filmes, sessões e bilheteira.
+- `source/Documentacao_bilheteriaBD.txt`: Arquivo de notas para auxiliar no manejo da base de dados
+- `source/a2p1.py`: Parte 1 da Avaliação 2.
+- `source/a2p2.py`: Parte 2 da Avaliação 2.
+- `source/ModuloA2.py`: Módulo com funções para o manejo da base de dados.
+- `tex/relatorio.bib`: Arquivo de referências bibliográficas.
 - `tex/relatorio.tex`: Documento em LaTeX que compila o relatório do trabalho.
 
 ## Questões
-O script implementa as seguintes funcionalidades:
+Na parte 1 são respondidas as seguintes questões:
 1. **Questão 1**: Total de bilheteira de todos os filmes.
 2. **Questão 2**: Filme de maior bilheteira em 2023, por país de origem.
 3. **Questão 3**: DataFrame com as 100 cidades com maior bilheteira em 2023.
@@ -20,6 +23,6 @@ O script implementa as seguintes funcionalidades:
 
 ## Requisitos
 - Python 3.x
-- Bibliotecas: `pandas`, `sqlite3`, `matplotlib`, `numpy` (instale usando `pip install -r requirements.txt` se um arquivo de requisitos for fornecido).
-- SQLite para manipulação do banco de dados.
+- Bibliotecas: `pandas`, `sqlite3`, `matplotlib`, `numpy`, entre outras ... (instale usando `pip install -r requirements.txt`).
+- TeX Live
 
