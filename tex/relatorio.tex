@@ -9,7 +9,8 @@
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage{cite}
-
+\usepackage{float}
+\usepackage{lipsum}
 \lstset{
   language=Python,
   basicstyle=\ttfamily\small,
@@ -31,11 +32,13 @@
 
 \begin{abstract}
 Resumo do trabalho % TO-DO
+\lipsum[2-4]  
 \end{abstract}
 
 \section{Introdução}
 Introdução do trabalho.
 
+\pagebreak
 \section{Análise do Código}
 Introdução da Análise do Código
 \subsection*{Módulo Auxiliar A2}
@@ -158,6 +161,13 @@ def questao1():
     return resultado[['CIDADE', 'FILME', 'BILHETERIA']]
 \end{lstlisting}
 \subsection*{Questão 5}
+
+\pagebreak
+\section*{Visualizações}
+Visualização 1:
+\begin{figure}[H]
+    \centerline{\includegraphics[width = \linewidth, scale=0.5]{img/Figure_1.png}}
+\end{figure}
 
 \begin{thebibliography}{99}
 

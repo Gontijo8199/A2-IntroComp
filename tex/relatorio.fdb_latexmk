@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1749152399.67957 "/home/rafa/programacao/A2-IntroComp/tex/relatorio.tex" "relatorio.pdf" "relatorio" 1749152400.35485 0
-  "/home/rafa/programacao/A2-IntroComp/tex/relatorio.tex" 1749152399.38662 5200 107ee6014723cf16e48689f19b0819ec ""
+["pdflatex"] 1749210861.73337 "/home/rafa/programacao/A2-IntroComp/tex/relatorio.tex" "relatorio.pdf" "relatorio" 1749210862.68308 0
+  "/home/rafa/programacao/A2-IntroComp/tex/relatorio.tex" 1749210469.44797 5435 7e36de24fc9298ea01357ad317227cca ""
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1742685315 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1742685315 1004 54797486969f23fa377b128694d548df ""
   "/usr/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1742685315 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -64,6 +64,7 @@
   "/usr/share/texmf-dist/tex/latex/cite/cite.sty" 1742685315 26218 19edeff8cdc2bcb704e8051dc55eb5a7 ""
   "/usr/share/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty" 1742685315 13886 d1306dcf79a944f6988e688c1785f9ce ""
   "/usr/share/texmf-dist/tex/latex/etoolbox/etoolbox.sty" 1742685315 46850 d87daedc2abdc653769a6f1067849fe0 ""
+  "/usr/share/texmf-dist/tex/latex/float/float.sty" 1742685315 6749 16d2656a1984957e674b149555f1ea1d ""
   "/usr/share/texmf-dist/tex/latex/geometry/geometry.sty" 1742685315 41601 9cf6c5257b1bc7af01a58859749dd37a ""
   "/usr/share/texmf-dist/tex/latex/graphics-cfg/color.cfg" 1742685315 1213 620bba36b25224fa9b7e1ccb4ecb76fd ""
   "/usr/share/texmf-dist/tex/latex/graphics-cfg/graphics.cfg" 1742685315 1224 978390e9c2234eab29404bc21b268d1e ""
@@ -83,7 +84,11 @@
   "/usr/share/texmf-dist/tex/latex/kvoptions/kvoptions.sty" 1742685315 22555 6d8e155cfef6d82c3d5c742fea7c992e ""
   "/usr/share/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty" 1742685315 13815 760b0c02f691ea230f5359c4e1de23a7 ""
   "/usr/share/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def" 1742685315 29785 9f93ab201fe5dd053afcc6c1bcf7d266 ""
+  "/usr/share/texmf-dist/tex/latex/l3kernel/expl3.sty" 1742685315 6565 f51d809db6193fae7b06c1bc26ca8f75 ""
+  "/usr/share/texmf-dist/tex/latex/l3packages/l3keys2e/l3keys2e.sty" 1742685315 4674 22943918cc84173478a588d6efbc800b ""
   "/usr/share/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg" 1742685315 678 4792914a8f45be57bb98413425e4c7af ""
+  "/usr/share/texmf-dist/tex/latex/lipsum/lipsum.ltd.tex" 1742685315 95525 6fd0552101a6b1f9b7a84b402ec435ba ""
+  "/usr/share/texmf-dist/tex/latex/lipsum/lipsum.sty" 1742685315 14690 c2c754218a7108db7823a4839c1bc3cd ""
   "/usr/share/texmf-dist/tex/latex/listings/listings.cfg" 1742685315 1865 301ae3c26fb8c0243307b619a6aa2dd3 ""
   "/usr/share/texmf-dist/tex/latex/listings/listings.sty" 1742685315 81640 997090b6c021dc4af9ee00a97b85c5b4 ""
   "/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty" 1742685315 206518 4eb59a801ad842a713fa168c34227290 ""
@@ -96,9 +101,10 @@
   "/usr/share/texmf-dist/web2c/texmf.cnf" 1742685315 42087 b0f9697c952c8f5a8eede4134282cb0d ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1749123101 5311557 9da84c45f5b388655502706482323571 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1749123834 2009810 abe8bc165b414002ad52f7da261fbdfa ""
-  "relatorio.aux" 1749152400.26598 546 461d667a54c374ac0df4d1c66d56a023 "pdflatex"
-  "relatorio.out" 1749152400.2666 239 a0116d70fc59698093464e7d93d8e9af "pdflatex"
-  "relatorio.tex" 1749152399.38662 5200 107ee6014723cf16e48689f19b0819ec ""
+  "img/Figure_1.png" 1749210861.28286 128590 77a07f1dab975ed27264f22b9c519614 ""
+  "relatorio.aux" 1749210862.61083 546 558fa276a29f82ea564fa30191b8e7eb "pdflatex"
+  "relatorio.out" 1749210862.61183 239 a0116d70fc59698093464e7d93d8e9af "pdflatex"
+  "relatorio.tex" 1749210469.44797 5435 7e36de24fc9298ea01357ad317227cca ""
   (generated)
   "relatorio.aux"
   "relatorio.log"

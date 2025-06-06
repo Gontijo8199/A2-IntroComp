@@ -50,7 +50,7 @@ def questao2():
             'publico': int(most_viewed_film['publico'])
         }
     
-    return dic # modo de retorno não especificado, vou priorizar dicionario para caso precise separar por pais (key)
+    return pd.DataFrame(dic) 
 
 
     
@@ -113,7 +113,7 @@ def main():
     # questao1()
     #print("Questão 1: \n", questao1())
     # questao2()
-    #print("Questão 2: \n", questao2())
+    print("Questão 2: \n", questao2())
     
     #questao4()
     #print("Questão 4: \n", questao4())
