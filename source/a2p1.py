@@ -62,8 +62,30 @@ ordenadas de forma decrescente de bilheteria.
 '''
 
 def questao3():
-    resultado = 0 
-    return resultado
+    # Carregar os dataframes que vou utilizar
+    dsessao = a2.carrega_tabela(PATH / 'bilheteria.db', 'sessao')
+    dsala = a2.carrega_tabela(PATH / 'bilheteria.db', 'sala')[['id', 'from_complexo']]
+    dcomplexo = a2.carrega_tabela(PATH / 'bilheteria.db', 'complexo')[['id', 'municipio']]
+
+    # junta as sessões com as salas
+    df = dsessao.merge(dsala, left_on='sala_id', right_on='id', how='left')
+
+    # junta o dataframe anterior com o dcomplexo para obter as cidades
+    df = df.merge(dcomplexo, left_on='from_complexo', right_on='id', how='left')
+
+    # Agrupa por cidade e somo com o público
+    cidades = df.groupby('municipio', as_index=False)['publico'].sum()
+
+    #renomeio pra ficar bonitinho kkkk
+    cidades = cidades.rename(columns={'publico': 'BILHETERIA'})
+
+    # Selecionar as 100 cidades com a maior bilheteria
+    top100 = cidades.sort_values('BILHETERIA', ascending=False).head(100)
+
+    return top100
+
+
+
 
 '''
 4. Qual o filme com maior bilheteria em cada cidade? Retorne um dataframe
@@ -96,8 +118,6 @@ def questao4():
 
 
     
-    
-
 '''
 5. Quais as cidades com as maiores bilheterias para filmes brasileiros? Ao
 contar a bilheteria de filmes brasileiros, também some as bilheterias
@@ -106,17 +126,55 @@ BILHETERIA_BR, BILHETERIA_ESTRANGEIRA
 '''  
 
 def questao5():
-    resultado = 0 
-    return resultado
+    # Carregar os dataframes que vou utilizar
+    dsessao = a2.carrega_tabela(PATH / 'bilheteria.db', 'sessao')
+    dsala = a2.carrega_tabela(PATH / 'bilheteria.db', 'sala')[['id', 'from_complexo']]
+    dcomplexo = a2.carrega_tabela(PATH / 'bilheteria.db', 'complexo')[['id', 'municipio']]
+    dfilme = a2.carrega_tabela(PATH / 'bilheteria.db', 'filme')[['id', 'pais_origem']]
+
+    # Junta a sessão com a sala
+    df = dsessao.merge(dsala, left_on='sala_id', right_on='id', how='left')
+    df = df.rename(columns={'id_x': 'sessao_id', 'id_y': 'sala_id'})
+
+    # Juntar com complexo para obter a cidade
+    df = df.merge(dcomplexo, left_on='from_complexo', right_on='id', how='left')
+    df = df.rename(columns={'municipio': 'CIDADE'})
+
+    # Juntar com filme para saber de qual cidade é qual
+    df = df.merge(dfilme, left_on='filme_id', right_on='id', how='left')
+
+    # Cria uma coluna de tipo do filme (se é BR ou ESTRANGEIRO)
+    df['tipo'] = df['pais_origem'].apply(lambda x: 'BR' if isinstance(x, str) and 'BRASIL' in x else 'ESTRANGEIRO')
+    print(df)
+
+    # Agrupar por cidade e tipo de filme
+    bilheteria = df.groupby(['CIDADE', 'tipo'], as_index=False)['publico'].sum()
+    print(bilheteria)
+
+    # Pivotar a tabela para colunas separadas
+    tabela_final = bilheteria.pivot(index='CIDADE', columns='tipo', values='publico').fillna(0)
+
+    # Renomeia as colunas do jeitinho que o professor quer
+    tabela_final = tabela_final.rename(columns={'BR': 'BILHETERIA_BR', 'ESTRANGEIRO': 'BILHETERIA_ESTRANGEIRA'}).reset_index()
+    
+
+    # hello_world('print')
+    return tabela_final
+
+
+
 
 def main():
     # questao1()
     #print("Questão 1: \n", questao1())
     # questao2()
-    print("Questão 2: \n", questao2())
-    
+    # print("Questão 2: \n", questao2())
+    # questao3()
+    #print("Questão 3: \n", questao3())
     #questao4()
     #print("Questão 4: \n", questao4())
+    questao5()
+    #print("Questão 5: \n", questao5())
     return 0
 
 if __name__ == '__main__':
