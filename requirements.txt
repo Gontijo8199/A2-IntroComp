@@ -1,6 +1,6 @@
 pandas
 matplotlib
-sqlite3
+statsmodels
 numpy
 seaborn
 pathlib

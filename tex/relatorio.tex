@@ -166,8 +166,39 @@ def questao1():
 \section*{Visualizações}
 Visualização 1:
 \begin{figure}[H]
-    \centerline{\includegraphics[width = \linewidth, scale=0.5]{img/Figure_1.png}}
+    \centerline{\includegraphics[width = \linewidth, scale=0.7]{img/Figure_1.png}}
 \end{figure}
+Visualização 2:
+\begin{figure}[H]
+    \centerline{\includegraphics[width = \linewidth, scale=0.5]{img/Figure_2.png}}
+\end{figure}
+
+O modelo de regressão linear no espaço logarítmico é dado por:
+
+\[
+\log_{10}(y) = a \cdot \log_{10}(x) + b
+\]
+
+onde:
+\begin{itemize}
+    \item \(y\) representa a quantidade de salas,
+    \item \(x\) representa o público,
+    \item \(a\) é o coeficiente angular (inclinação) da reta,
+    \item \(b\) é o intercepto da reta.
+\end{itemize}
+
+\bigskip
+
+A transformação para o espaço original é dada por:
+
+\[
+y = 10^{b} \cdot x^{a}
+\]
+\[
+\min_{a,b} \sum_{i} \left( \log_{10}(y_i) - \left(a \cdot \log_{10}(x_i) + b \right) \right)^2
+\]
+
+onde \(\{(x_i, y_i)\}\) são os dados observados com \(x_i, y_i > 0\).
 
 \begin{thebibliography}{99}
 
