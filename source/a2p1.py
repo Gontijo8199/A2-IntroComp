@@ -159,11 +159,9 @@ def questao5():
 
     # Cria uma coluna de tipo do filme (se é BR ou ESTRANGEIRO)
     df['tipo'] = df['pais_origem'].apply(lambda x: 'BR' if isinstance(x, str) and 'BRASIL' in x else 'ESTRANGEIRO')
-    print(df)
 
     # Agrupar por cidade e tipo de filme
     bilheteria = df.groupby(['CIDADE', 'tipo'], as_index=False)['publico'].sum()
-    print(bilheteria)
 
     # Pivotar a tabela para colunas separadas
     tabela_final = bilheteria.pivot(index='CIDADE', columns='tipo', values='publico').fillna(0)

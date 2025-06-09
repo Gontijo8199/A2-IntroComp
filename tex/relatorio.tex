@@ -135,15 +135,35 @@ def questao1():
     return dic
 \end{lstlisting}
 \subsection*{Questão 3}
-\subsection*{Questão 4}
+
 
 \begin{lstlisting}
-  def questao4():
+    def questao3():
     
     dsessao = a2.carrega_tabela(PATH / 'bilheteria.db', 'sessao')
     dsala = a2.carrega_tabela(PATH / 'bilheteria.db', 'sala')[['id', 'from_complexo']]
     dcomplexo = a2.carrega_tabela(PATH / 'bilheteria.db', 'complexo')[['id', 'municipio']]
 
+    df = dsessao.merge(dsala, left_on='sala_id', right_on='id', how='left')
+
+    # junta o dataframe anterior com o dcomplexo para obter as cidades
+    df = df.merge(dcomplexo, left_on='from_complexo', right_on='id', how='left')
+
+    cidades = df.groupby('municipio', as_index=False)['publico'].sum()
+
+    cidades = cidades.rename(columns={'publico': 'BILHETERIA'})
+
+    top100 = cidades.sort_values('BILHETERIA', ascending=False).head(100)
+
+    return top100
+\end{lstlisting}
+\subsection*{Questão 4}
+\begin{lstlisting}
+    def questao4():
+    
+    dsessao = a2.carrega_tabela(PATH / 'bilheteria.db', 'sessao')
+    dsala = a2.carrega_tabela(PATH / 'bilheteria.db', 'sala')[['id', 'from_complexo']]
+    dcomplexo = a2.carrega_tabela(PATH / 'bilheteria.db', 'complexo')[['id', 'municipio']]
     dfilme = a2.carrega_tabela(PATH / 'bilheteria.db', 'filme')[['id', 'titulo_original']]
 
     df = dsessao.merge(dsala, left_on='sala_id', right_on='id', how='left')
@@ -161,20 +181,49 @@ def questao1():
     resultado = bilheteria.sort_values('BILHETERIA', ascending=False).groupby('CIDADE').head(1)
 
     return resultado[['CIDADE', 'FILME', 'BILHETERIA']]
-\end{lstlisting}
-\subsection*{Questão 5}
 
+\end{lstlisting}
+
+\subsection*{Questão 5}
+\begin{lstlisting}
+    def questao5():
+    
+    dsessao = a2.carrega_tabela(PATH / 'bilheteria.db', 'sessao')
+    dsala = a2.carrega_tabela(PATH / 'bilheteria.db', 'sala')[['id', 'from_complexo']]
+    dcomplexo = a2.carrega_tabela(PATH / 'bilheteria.db', 'complexo')[['id', 'municipio']]
+    dfilme = a2.carrega_tabela(PATH / 'bilheteria.db', 'filme')[['id', 'pais_origem']]
+
+    df = dsessao.merge(dsala, left_on='sala_id', right_on='id', how='left')
+    df = df.rename(columns={'id_x': 'sessao_id', 'id_y': 'sala_id'})
+
+    df = df.merge(dcomplexo, left_on='from_complexo', right_on='id', how='left')
+    df = df.rename(columns={'municipio': 'CIDADE'})
+
+    df = df.merge(dfilme, left_on='filme_id', right_on='id', how='left')
+
+    df['tipo'] = df['pais_origem'].apply(lambda x: 'BR' if isinstance(x, str) and 'BRASIL' in x else 'ESTRANGEIRO')
+
+    bilheteria = df.groupby(['CIDADE', 'tipo'], as_index=False)['publico'].sum()
+
+    tabela_final = bilheteria.pivot(index='CIDADE', columns='tipo', values='publico').fillna(0)
+
+    tabela_final = tabela_final.rename(columns={'BR': 'BILHETERIA_BR', 'ESTRANGEIRO': 'BILHETERIA_ESTRANGEIRA'}).reset_index()
+    
+
+    return tabela_final
+
+\end{lstlisting}
 \pagebreak
 \section*{Visualizações}
-Visualização 1:
+\subsection*{Visualização 1:}
 \begin{figure}[H]
-    \centerline{\includegraphics[width = \linewidth, scale=0.7]{img/Figure_1.png}}
+    \centerline{\includegraphics[width = \linewidth]{img/Figure_1.png}}
 \end{figure}
 
 \lipsum[1-2]  
-Visualização 2:
+\subsection*{Visualização 2:}
 \begin{figure}[H]
-    \centerline{\includegraphics[width = \linewidth, scale=0.5]{img/Figure_2.png}}
+    \centerline{\includegraphics[width = \linewidth]{img/Figure_2.png}}
 \end{figure}
 
 O modelo de regressão linear no espaço logarítmico é dado por:
@@ -203,6 +252,12 @@ y = 10^{b} \cdot x^{a}
 \]
 
 onde \(\{(x_i, y_i)\}\) são os dados observados com \(x_i, y_i > 0\).
+
+\subsection*{Visualização 3:}
+\begin{figure}[H]
+    \centerline{\includegraphics[width = \linewidth]{img/Figure_3.png}}
+\end{figure}
+\lipsum[1-2]
 
 \begin{thebibliography}{99}
 

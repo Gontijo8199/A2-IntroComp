@@ -197,8 +197,13 @@ INPUT ./img/Figure_2.png
 INPUT /usr/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm
-INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
+INPUT ./img/Figure_3.png
+INPUT ./img/Figure_3.png
+INPUT ./img/Figure_3.png
+INPUT ./img/Figure_3.png
+INPUT ./img/Figure_3.png
 INPUT /usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
+INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
 INPUT relatorio.aux
 INPUT ./relatorio.out
 INPUT ./relatorio.out

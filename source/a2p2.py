@@ -4,6 +4,12 @@ import seaborn as sns
 import numpy as np
 #from scipy.stats import gaussian_kde
 #from matplotlib.lines import Line2D
+
+import math
+
+import matplotlib.colors as mcolors
+from matplotlib.patches import Rectangle
+
 from pathlib import Path
 import ModuloA2 as a2
 import statsmodels.api as sm
@@ -100,11 +106,90 @@ def grafico2():
     plt.legend()
     plt.show()
 
+def grafico3():
+        
+    df = dsessao.groupby('filme_id')[['publico', 'sala_id']].sum().reset_index()
+    dfm = dfilme.merge(df, left_on='id', right_on='filme_id')
+
+    dfm_pais_publico = dfm.groupby('pais_origem')['publico'].sum().reset_index().fillna(0)
+    dfm_pais_publico = dfm_pais_publico.sort_values('publico', ascending=False).head(10)
+
+    top3_paises = dfm_pais_publico.head(3)['pais_origem'].tolist()
+    dfm_pais_publico['top3'] = dfm_pais_publico['pais_origem'].apply(lambda x: 'Top 3' if x in top3_paises else 'Outros')
+
+    plt.yscale('log')
+
+    sns.barplot(dfm_pais_publico, x='pais_origem', y='publico', hue='top3', palette=[ 'sandybrown', 'skyblue'] )
+    plt.ylabel("Público", fontsize=16, loc='top', rotation=0)
+    plt.xlabel("País", fontsize=16)
+    plt.grid(True, linestyle='--',zorder=1)
+    plt.legend().remove()
+    plt.xticks(fontsize=13)
+    plt.yticks(fontsize=14)
+    plt.title("Top 10 Países por bilheteria", fontsize=18)
+
+    plt.show()
+
+''' apoio para a tabela de cores'''
+
+def plot_colortable(colors, *, ncols=4, sort_colors=True):
+
+    cell_width = 212
+    cell_height = 22
+    swatch_width = 48
+    margin = 12
+
+    # Sort colors by hue, saturation, value and name.
+    if sort_colors is True:
+        names = sorted(
+            colors, key=lambda c: tuple(mcolors.rgb_to_hsv(mcolors.to_rgb(c))))
+    else:
+        names = list(colors)
+
+    n = len(names)
+    nrows = math.ceil(n / ncols)
+
+    width = cell_width * ncols + 2 * margin
+    height = cell_height * nrows + 2 * margin
+    dpi = 72
+
+    fig, ax = plt.subplots(figsize=(width / dpi, height / dpi), dpi=dpi)
+    fig.subplots_adjust(margin/width, margin/height,
+                        (width-margin)/width, (height-margin)/height)
+    ax.set_xlim(0, cell_width * ncols)
+    ax.set_ylim(cell_height * (nrows-0.5), -cell_height/2.)
+    ax.yaxis.set_visible(False)
+    ax.xaxis.set_visible(False)
+    ax.set_axis_off()
+
+    for i, name in enumerate(names):
+        row = i % nrows
+        col = i // nrows
+        y = row * cell_height
+
+        swatch_start_x = cell_width * col
+        text_pos_x = cell_width * col + swatch_width + 7
+
+        ax.text(text_pos_x, y, name, fontsize=14,
+                horizontalalignment='left',
+                verticalalignment='center')
+
+        ax.add_patch(
+            Rectangle(xy=(swatch_start_x, y-9), width=swatch_width,
+                      height=18, facecolor=colors[name], edgecolor='0.7')
+        )
+
+    return fig
 
 def main():
     # grafico1()
     # grafico2()
     
+    
+    #plot_colortable(mcolors.CSS4_COLORS)
+    #plt.show()
+    
+    grafico3()
     return 0
 if __name__ == "__main__":
     main()
