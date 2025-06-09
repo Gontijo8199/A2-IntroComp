@@ -23,6 +23,7 @@ Na parte 1 são respondidas as seguintes questões:
 
 ## Requisitos
 - Python 3.x
-- Bibliotecas: `pandas`, `sqlite3`, `matplotlib`, `numpy`, entre outras ... (instale usando `pip install -r requirements.txt`).
+- Bibliotecas: `pandas`, `matplotlib`, `numpy`, `statsmodels`, entre outras ... (instale usando `pip install -r requirements.txt` em sua venv).
 - TeX Live
+- SQLIte 3
 
