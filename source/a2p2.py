@@ -130,6 +130,30 @@ def grafico3():
 
     plt.show()
 
+def grafico4():
+    df = dsessao.merge(dsala, left_on='sala_id', right_on='id')
+    df = df.merge(dcomplexo, left_on='from_complexo', right_on='id')
+
+    top_cidades = df.groupby('municipio', as_index=False)['publico'].sum()
+    top_cidades = top_cidades.sort_values('publico', ascending=False).head(10)
+
+    top_cidades['top3'] = ['Top 3' if i < 3 else 'Outras' for i in range(len(top_cidades))]
+
+    plt.figure(figsize=(10, 6))
+    sns.barplot(data=top_cidades, y='municipio', x='publico', hue='top3', palette=['green', 'blue'])
+
+    plt.xscale('log')  
+    plt.xlabel("Público", fontsize=16)
+    plt.ylabel("Cidade", fontsize=16)
+    plt.grid(True, axis='x', linestyle='--', zorder=1)
+    plt.legend().remove()
+    plt.xticks(fontsize=13)
+    plt.yticks(fontsize=14)
+    plt.title("Top 10 Cidades por Bilheteria (Escala Log)", fontsize=18)
+    plt.tight_layout()
+    plt.show()
+
+
 ''' apoio para a tabela de cores'''
 
 def plot_colortable(colors, *, ncols=4, sort_colors=True):
@@ -189,7 +213,7 @@ def main():
     #plot_colortable(mcolors.CSS4_COLORS)
     #plt.show()
     
-    grafico3()
+    #grafico3()
     return 0
 if __name__ == "__main__":
     main()

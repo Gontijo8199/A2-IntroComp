@@ -20,6 +20,4 @@ Index(['id', 'nome', 'from_complexo'], dtype='object')
 Index(['id', 'filme_id', 'sala_id', 'publico', 'data_exibicao'], dtype='object')
 
  filme
- 
-Index(['id', 'titulo_original', 'titulo_br', 'cpb_roe', 'pais_origem',
-       'from_distribuidora'],
+Index(['id', 'titulo_original', 'titulo_br', 'cpb_roe', 'pais_origem','from_distribuidora'],)
