@@ -6,6 +6,7 @@ import numpy as np
 #from matplotlib.lines import Line2D
 
 import math
+import matplotlib.ticker as mticker
 
 import matplotlib.colors as mcolors
 from matplotlib.patches import Rectangle
@@ -106,51 +107,135 @@ def grafico2():
     plt.legend()
     plt.show()
 
+# grafico 3
+
 def grafico3():
-        
-    df = dsessao.groupby('filme_id')[['publico', 'sala_id']].sum().reset_index()
-    dfm = dfilme.merge(df, left_on='id', right_on='filme_id')
+    
+    cor_brasil = 'coral'
+    cor_cidade = 'lightblue'
+    cor_outros = 'lightgray'
 
-    dfm_pais_publico = dfm.groupby('pais_origem')['publico'].sum().reset_index().fillna(0)
+    df1 = dsessao.groupby('filme_id')[['publico', 'sala_id']].sum().reset_index()
+    dfm = dfilme.merge(df1, left_on='id', right_on='filme_id')
+
+    dfm_pais_publico = dfm.groupby('pais_origem')['publico'].sum().reset_index()
     dfm_pais_publico = dfm_pais_publico.sort_values('publico', ascending=False).head(10)
+    dfm_pais_publico['destaque'] = dfm_pais_publico['pais_origem'].apply(
+        lambda x: 'BRASIL' if x.upper() == 'BRASIL' else 'OUTROS'
+    )
 
-    top3_paises = dfm_pais_publico.head(3)['pais_origem'].tolist()
-    dfm_pais_publico['top3'] = dfm_pais_publico['pais_origem'].apply(lambda x: 'Top 3' if x in top3_paises else 'Outros')
+    df2 = dsessao.merge(dsala, left_on='sala_id', right_on='id')
+    df2 = df2.merge(dcomplexo, left_on='from_complexo', right_on='id')
 
-    plt.yscale('log')
+    top_cidades = df2.groupby('municipio', as_index=False)['publico'].sum()
+    top_cidades = top_cidades.sort_values('publico', ascending=False).head(10)
+    top_cidades['categoria'] = ['Top 3' if i < 3 else 'Outras' for i in range(len(top_cidades))]
 
-    sns.barplot(dfm_pais_publico, x='pais_origem', y='publico', hue='top3', palette=[ 'sandybrown', 'skyblue'] )
-    plt.ylabel("Público", fontsize=16, loc='top', rotation=0)
-    plt.xlabel("País", fontsize=16)
-    plt.grid(True, linestyle='--',zorder=1)
-    plt.legend().remove()
-    plt.xticks(fontsize=13)
-    plt.yticks(fontsize=14)
-    plt.title("Top 10 Países por bilheteria", fontsize=18)
+    fig, axes = plt.subplots(1, 2, figsize=(20, 8))
+    fig.suptitle("Cinematografia Brasileira: Visão Global e Nacional", fontsize=20)
 
+    sns.barplot(
+        ax=axes[0],
+        data=dfm_pais_publico,
+        y='pais_origem',
+        x='publico',
+        hue='destaque',
+        dodge=False,
+        palette={'BRASIL': cor_brasil, 'OUTROS': cor_outros}
+    )
+    axes[0].set_xscale('log')
+    axes[0].set_title("Top 10 Bilheterias Globais", fontsize=18)
+    axes[0].set_xlabel("Bilheteria (log)", fontsize=16)
+    axes[0].tick_params(axis='y', labelsize=12)
+    axes[0].tick_params(axis='x', labelsize=12)
+    axes[0].set_ylabel(" ")
+    axes[0].legend().remove()
+    axes[0].grid(True, linestyle='--', alpha=0.6)
+
+    sns.barplot(
+        ax=axes[1],
+        data=top_cidades,
+        y='municipio',
+        x='publico',
+        hue='categoria',
+        dodge=False,
+        palette={'Top 3': cor_cidade, 'Outras': cor_outros}
+    )
+    axes[1].set_title("Top 10 Bilheterias Nacionais", fontsize=18)
+
+    max_publico = top_cidades['publico'].max()
+    margem = max_publico * 0.20  
+    axes[1].set_xlim(0, max_publico + margem)
+
+    axes[1].set_xlabel("Bilheteria", fontsize=16)
+    axes[1].tick_params(axis='y', labelsize=12)
+    axes[1].tick_params(axis='x', labelsize=12)
+    axes[1].set_ylabel(" ")
+    axes[1].legend().remove()
+    axes[1].grid(True, linestyle='--', alpha=0.6)
+
+    xlim0 = axes[0].get_xlim()
+    for i, pais in enumerate(dfm_pais_publico['pais_origem']):
+        publico = dfm_pais_publico.loc[dfm_pais_publico['pais_origem'] == pais, 'publico'].values[0]
+        if pais.upper() == 'BRASIL':
+            y = i
+            x = publico
+            deslocamento = (xlim0[1] - xlim0[0]) * 0.002
+            x_text = x + deslocamento
+            axes[0].text(
+                x_text,
+                y,
+                f"{int(publico):,}",
+                va='center',
+                ha='left',
+                fontsize=12,
+                color=cor_brasil,
+                fontweight='bold'
+            )
+
+    xlim1 = axes[1].get_xlim()
+    for i, row in top_cidades.iterrows():
+        if row['categoria'] == 'Top 3':
+            y = top_cidades.index.get_loc(i)
+            x = row['publico']
+            deslocamento = (xlim1[1] - xlim1[0]) * 0.02  
+            x_text = x + deslocamento
+            axes[1].text(
+                x_text,
+                y,
+                f"{int(x):,}",
+                va='center',
+                ha='left',
+                fontsize=12,
+                color=cor_cidade,
+                fontweight='bold'
+            )
+
+    plt.tight_layout(rect=[0, 0, 1, 0.95])
     plt.show()
 
+
+# grafico 4
 def grafico4():
-    df = dsessao.merge(dsala, left_on='sala_id', right_on='id')
-    df = df.merge(dcomplexo, left_on='from_complexo', right_on='id')
+    dfm = dsessao.copy()
+    dfm = dfm.merge(dfilme, left_on='filme_id', right_on='id', suffixes=('', '_filme'))
+    dfm = dfm.merge(dsala, left_on='sala_id', right_on='id', suffixes=('', '_sala'))
+    dfm = dfm.merge(dcomplexo, left_on='from_complexo', right_on='id', suffixes=('', '_complexo'))
 
-    top_cidades = df.groupby('municipio', as_index=False)['publico'].sum()
-    top_cidades = top_cidades.sort_values('publico', ascending=False).head(10)
+    dfm_brasil = dfm[dfm['pais_origem'].str.upper() == 'BRASIL'].copy()
+    dfm_brasil['data_exibicao'] = pd.to_datetime(dfm_brasil['data_exibicao'], format="%d/%m/%Y")
+    dfm_brasil['data_mes'] = dfm_brasil['data_exibicao'].dt.month
 
-    top_cidades['top3'] = ['Top 3' if i < 3 else 'Outras' for i in range(len(top_cidades))]
+    agrupado = dfm_brasil.groupby(['filme_id', 'data_mes'])['publico'].sum().reset_index()
 
-    plt.figure(figsize=(10, 6))
-    sns.barplot(data=top_cidades, y='municipio', x='publico', hue='top3', palette=['green', 'blue'])
 
-    plt.xscale('log')  
-    plt.xlabel("Público", fontsize=16)
-    plt.ylabel("Cidade", fontsize=16)
-    plt.grid(True, axis='x', linestyle='--', zorder=1)
-    plt.legend().remove()
-    plt.xticks(fontsize=13)
-    plt.yticks(fontsize=14)
-    plt.title("Top 10 Cidades por Bilheteria (Escala Log)", fontsize=18)
-    plt.tight_layout()
+    plt.figure(figsize=(14, 7))
+    sns.boxplot(data=agrupado, x='data_mes', y='publico')
+    plt.xlabel("Mês")
+    plt.yscale('log')
+    plt.ylabel("Público por Filme")
+    plt.title("Distribuição do Público por Filme Brasileiro em Cada Mês")
+    plt.grid(True, axis='y', linestyle='--', alpha=0.6)
     plt.show()
 
 
@@ -163,7 +248,6 @@ def plot_colortable(colors, *, ncols=4, sort_colors=True):
     swatch_width = 48
     margin = 12
 
-    # Sort colors by hue, saturation, value and name.
     if sort_colors is True:
         names = sorted(
             colors, key=lambda c: tuple(mcolors.rgb_to_hsv(mcolors.to_rgb(c))))
@@ -208,12 +292,13 @@ def plot_colortable(colors, *, ncols=4, sort_colors=True):
 def main():
     # grafico1()
     # grafico2()
-    
+    # grafico3()
+    grafico4()
     
     #plot_colortable(mcolors.CSS4_COLORS)
     #plt.show()
     
-    #grafico3()
+    
     return 0
 if __name__ == "__main__":
     main()

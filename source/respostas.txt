@@ -1,0 +1,73 @@
+Questão 1: 
+                                            filme_id  publico
+0                                     DURVAL DISCOS      825
+1                                         NOSSO LAR    23090
+2                                           REMOÇÃO       90
+3                      HOJE EU QUERO VOLTAR SOZINHO       18
+4                            O HOMEM DE LAGOA SANTA      531
+..                                              ...      ...
+510             NCT NATION: TO THE WORLD IN CINEMAS     4215
+511                            JOURNEY TO BETHLEHEM     8247
+512                                       PRISCILLA     7904
+513  SEVENTEEN TOUR 'FOLLOW' TO JAPAN: LIVE VIEWING     6140
+514                                      THE CHOSEN   114826
+
+[515 rows x 2 columns]
+
+Questão 2: 
+               BRASIL        PORTUGAL  ...      ESLOVÊNIA     SUÍÇA
+nome     NOSSO SONHO  A ÚLTIMA FESTA  ...  PICCOLO CORPO  LA LIGNE
+publico       485818            1608  ...             43       543
+
+[2 rows x 40 columns]
+
+Questão 3: 
+                 municipio  BILHETERIA
+309             SÃO PAULO    13310470
+263        RIO DE JANEIRO     8496306
+49               BRASÍLIA     3272437
+40         BELO HORIZONTE     3009414
+94               CURITIBA     2965114
+..                    ...         ...
+24              ARAÇATUBA      247992
+338  VITÓRIA DA CONQUISTA      246490
+244          PONTA GROSSA      241142
+175      LAURO DE FREITAS      240784
+17              ARAPIRACA      222245
+
+[100 rows x 2 columns]
+
+Questão 4: 
+                        CIDADE                   FILME  BILHETERIA
+32090               SÃO PAULO                  BARBIE     1201206
+26663          RIO DE JANEIRO                  BARBIE      719539
+4937                 BRASÍLIA                  BARBIE      289033
+3575           BELO HORIZONTE                  BARBIE      283911
+9524                 CURITIBA                  BARBIE      269314
+...                       ...                     ...         ...
+6948             CAMPOS NOVOS                  FAST X         654
+20133              MOGI-GUACU       THE EXPENDABLES 4         601
+9774            CÓRREGO FUNDO  FRANCO NO TREM DO MEDO          53
+22063                   PAINS  FRANCO NO TREM DO MEDO          51
+28561  SANTO ANTÔNIO DO MONTE      BEM VINDOS DE NOVO          47
+
+[345 rows x 3 columns]
+
+Questão 5: 
+ tipo                 CIDADE  BILHETERIA_BR  BILHETERIA_ESTRANGEIRA
+0                    ACARAÚ         1650.0                 46793.0
+1                     AGUAÍ          260.0                 12264.0
+2                ALAGOINHAS         2755.0                 51018.0
+3                   ALFENAS          773.0                 41387.0
+4                  ALTAMIRA          500.0                 38023.0
+..                      ...            ...                     ...
+340           VOLTA REDONDA        10134.0                337000.0
+341              VOTORANTIM         7584.0                364723.0
+342           VÁRZEA GRANDE         3517.0                139581.0
+343         VÁRZEA PAULISTA         1060.0                 57957.0
+344   ÁGUAS LINDAS DE GOIÁS          901.0                 82694.0
+
+[345 rows x 3 columns]
+
+
+feito por:  Nathan Loose Kuipper ,  Rafael Gontijo Ferreira
