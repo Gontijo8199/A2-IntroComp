@@ -11,6 +11,8 @@
 \usepackage{cite}
 \usepackage{float}
 \usepackage{lipsum}
+\usepackage{tabularx}
+
 
 \lstset{
   language=Python,
@@ -258,6 +260,72 @@ onde \(\{(x_i, y_i)\}\) são os dados observados com \(x_i, y_i > 0\).
     \centerline{\includegraphics[width = \linewidth]{img/Figure_3.png}}
 \end{figure}
 \lipsum[1-2]
+
+\subsection*{Visualização 4:}
+\begin{figure}[H]
+    \centerline{\includegraphics[width = \linewidth]{img/Figure_4.png}}
+\end{figure}
+\lipsum[1-2]
+
+\section*{Tabelas}
+\subsection*{Tabela 1}
+\begin{table}[H]
+\centering
+\caption{Tempo útil médio de exibição por país de origem}
+\begin{tabular}{l r}
+\hline
+\textbf{País de Origem} & \textbf{Tempo Útil Médio (dias)} \\
+\hline
+SUÉCIA & 161.00 \\
+CHINA & 143.75 \\
+BELARUS (BIELORUSSIA) & 129.00 \\
+ESPANHA & 109.60 \\
+IRÃ & 97.00 \\
+ESTADOS UNIDOS & 75.43 \\
+CANADÁ & 75.22 \\
+POLÔNIA & 73.60 \\
+ÁUSTRIA & 68.00 \\
+BÉLGICA & 58.00 \\
+COLÔMBIA & 58.00 \\
+ALEMANHA & 55.44 \\
+EMIRADOS ÁRABES UNIDOS & 55.00 \\
+PANAMÁ & 54.00 \\
+HOLANDA & 41.00 \\
+
+
+
+\end{tabular}
+\begin{center}
+\ldots
+\end{center}
+\end{table}
+\subsection*{Tabela 2}
+\begin{table}[H]
+\centering
+\caption{Estatísticas de público por filme: média, desvio padrão e moda do dia da semana}
+\begin{tabularx}{\textwidth}{X r r l}
+\hline
+\textbf{Título} & \textbf{Média de Público} & \textbf{Desvio Padrão} & \textbf{Moda Dia} \\
+\hline
+FALE COMIGO & 227.83 & 299.91 & Quinta-feira \\
+GODZILLA MINUS ONE & 227.07 & 216.66 & Quinta-feira \\
+DECISÃO DE PARTIR & 211.83 & 231.45 & Quinta-feira \\
+13 EXORCISMOS & 205.23 & 154.26 & Quinta-feira \\
+BARBIE & 181.65 & 241.66 & Sábado \\
+TRIÂNGULO DA TRISTEZA & 180.03 & 208.68 & Quinta-feira \\
+THE CHOSEN - OS ESCOLHIDOS - TEMPORADA 4 - PARTE 1 & 179.42 & 102.65 & Quinta-feira \\
+TUDO EM TODO O LUGAR AO MESMO TEMPO & 169.97 & 197.06 & Quinta-feira \\
+SAPATINHO VERMELHO E OS SETE ANÕES & 161.00 & --- & Quinta-feira \\
+ENCANTO & 160.00 & --- & Quarta-feira \\
+
+
+
+\end{tabularx}
+\begin{center}
+$\ldots$
+\end{center}
+\end{table}
+
 
 \begin{thebibliography}{99}
 

@@ -289,16 +289,100 @@ def plot_colortable(colors, *, ncols=4, sort_colors=True):
 
     return fig
 
+
+''' tabelas '''
+
+def tabela1():
+    
+    dfm = dsessao.copy()
+    dfm = dfm.merge(dfilme, left_on='filme_id', right_on='id', suffixes=('', '_filme'))
+    dfm = dfm.merge(dsala, left_on='sala_id', right_on='id', suffixes=('', '_sala'))
+    dfm = dfm.merge(dcomplexo, left_on='from_complexo', right_on='id', suffixes=('', '_complexo'))
+    
+    dfm['data_exibicao'] = pd.to_datetime(dfm['data_exibicao'], format="%d/%m/%Y")
+    tempo_util_filme = (
+    dfm.groupby('filme_id')['data_exibicao']
+    .agg(['min', 'max'])
+    .reset_index()
+    )
+
+    tempo_util_filme['tempo_util_dias'] = (tempo_util_filme['max'] - tempo_util_filme['min']).dt.days
+
+
+    filme_pais = dfm[['filme_id', 'pais_origem']].drop_duplicates()
+
+    tempo_util_filme = tempo_util_filme.merge(filme_pais, on='filme_id', how='left')
+
+
+    tempo_util_por_pais = (
+        tempo_util_filme.groupby('pais_origem')['tempo_util_dias']
+        .mean()
+        .reset_index()
+        .rename(columns={'tempo_util_dias': 'tempo_util_medio_dias'})
+    )
+
+    tempo_util_por_pais = tempo_util_por_pais.sort_values('tempo_util_medio_dias', ascending=False).reset_index(drop=True)
+
+    print(tempo_util_por_pais)
+       
+
+
+
+def tabela2():
+
+    
+    dfm = dsessao.copy()
+    dfm = dfm.merge(dfilme, left_on='filme_id', right_on='id', suffixes=('', '_filme'))
+    dfm = dfm.merge(dsala, left_on='sala_id', right_on='id', suffixes=('', '_sala'))
+    dfm = dfm.merge(dcomplexo, left_on='from_complexo', right_on='id', suffixes=('', '_complexo'))
+    
+    dfm['data_exibicao'] = pd.to_datetime(dfm['data_exibicao'], format="%d/%m/%Y")
+    
+    dfm['dia_semana'] = dfm['data_exibicao'].dt.day_name()
+
+    def moda_dia(series):
+        try:
+            return series.mode().iloc[0] if not series.mode().empty else None
+        except:
+            return None
+
+
+    resumo_filmes = (
+        dfm.groupby(['filme_id', 'titulo_br'])
+        .agg(
+            media_publico=('publico', 'mean'),
+            desvio_padrao_publico=('publico', 'std'),
+            moda_dia_semana=('dia_semana', moda_dia)
+        )
+        .reset_index()
+    )
+
+    resumo_filmes = resumo_filmes.sort_values('media_publico', ascending=False).reset_index(drop=True)
+
+    print(resumo_filmes)
+    #print(resumo_filmes.head(10))
+
+    
+
+def tabela3():
+    ...
+    return 0
+
+
 def main():
     # grafico1()
     # grafico2()
     # grafico3()
-    grafico4()
+    # grafico4() TODO: Refazer o gráfico 4
+    
     
     #plot_colortable(mcolors.CSS4_COLORS)
     #plt.show()
     
+    #tabela1()
+    tabela2()
     
     return 0
+
 if __name__ == "__main__":
     main()
