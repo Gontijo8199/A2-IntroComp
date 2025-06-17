@@ -40,7 +40,14 @@
 \end{abstract}
 \pagebreak
 \section{Introdução}
-\lipsum[1-2]  % Substituir
+ Este trabalho tem como objetivo analisar os dados contido no arquivo bilheteria.db\\
+provenientes de sessões de cinema realizadas em diversos complexos espalhados pelo país\\
+A partir dessas informações, foi possível responder as questões propostas, realizar agrupamentos\\
+agrupamentos e gerar visualizações que revelam padrões de exibição e consumo de filmes nas cidades \\
+brasileiras.
+ Utilizando a linguagem Python e bibliotecas como pandas, matplotlib e seaborn, foi realizada a limpeza\\
+e análise dos dados, e também construídas tabelas e gráficos que ajudam a compreender o comportamento do \\
+público em diferentes regiões do Brasil e no mundo.
 
 
 
@@ -223,11 +230,20 @@ def questao1():
     \centerline{\includegraphics[width =\linewidth]{img/Figure_1.png}}
 \end{figure}
 
-\lipsum[1-2]   % Substituir
+A Visualização acima apresenta a variação da média semanal de público ao longo do ano de 2023. O gráfico\\
+de linha exibe o valor médio de público registrado por semana, enquanto a faixa sombreada representa o\\
+intervalo entre os valores mínimo e máximo observados no período, oferecendo uma ideia da dispersão dos dados.\\
+ É possível observar que o público apresenta grandes autos e baixos ao longo do ano, sugerindo que terá um grande\\
+público nas estreias de grandes filmes ou feriados prolongados Como observado em julho.
 \subsection*{Visualização 2:}
 \begin{figure}[H]
     \centerline{\includegraphics[width = \linewidth]{img/Figure_2.png}}
 \end{figure}
+
+ A visualização acima relaciona o número de salas em que um filme foi exibido e o seu público\\
+total, considerando apenas filmes exibidos em 10 salas ou mais. Com ele, pode-se observar que\\
+quanto mais salas um filme ocupa, maior tende a ser o público.\\
+
 
 O modelo de regressão linear no espaço logarítmico é dado por:
 
@@ -260,13 +276,25 @@ onde \(\{(x_i, y_i)\}\) são os dados observados com \(x_i, y_i > 0\).
 \begin{figure}[H]
     \centerline{\includegraphics[width = \linewidth]{img/Figure_3.png}}
 \end{figure}
-\lipsum[1-2] % Substituir
+
+A visualização apresentada foi dividida em dois gráficos de barras horizontais,\\
+à esquerda, podemos comparar a bilheteria do cinema brasileiro no cenário global\\
+enquanto no da direita podemos comparar no cenário nacional.\\
+ Vale ressaltar que foi destacado com uma cor diferente o Brasil no primeiro gráfico\\
+e no segundo destacamos os três primeiros. Para que assim, possamos garantir uma\\
+visualização mais clara e objetiva para quem irá vê-la.\\
 
 \subsection*{Visualização 4:}
 \begin{figure}[H]
     \centerline{\includegraphics[width = \linewidth]{img/Figure_4.png}}
 \end{figure}
-\lipsum[1-2] % Substituir
+
+Este gráfico de linha mostra a quantidade de filmes em função do tempo que permaneceram\\
+em cartaz, agrupados por continente.\\
+ Com ele, é possível observar que a América do Norte possui uma indústria cinematográfica\\
+com maior capacidade de sustentar filmes em exibição por longos períodos. Enquanto que em \\
+continentes como África e Oceania, os filmes tendem a ter ciclos de exibição mais curtos, \\
+refletindo limitações de mercado ou de distribuição.\\
 
 \section*{Tabelas}
 
