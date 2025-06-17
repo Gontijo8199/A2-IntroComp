@@ -12,6 +12,7 @@
 \usepackage{float}
 \usepackage{lipsum}
 \usepackage{tabularx}
+\usepackage{pdflscape}
 
 
 \lstset{
@@ -35,11 +36,11 @@
 
 \begin{abstract}
 
-\lipsum[1-4]  
+\lipsum[1-4]  % Substituir
 \end{abstract}
 \pagebreak
 \section{Introdução}
-\lipsum[1-2]  
+\lipsum[1-2]  % Substituir
 
 
 
@@ -219,10 +220,10 @@ def questao1():
 \section*{Visualizações}
 \subsection*{Visualização 1:}
 \begin{figure}[H]
-    \centerline{\includegraphics[width = \linewidth]{img/Figure_1.png}}
+    \centerline{\includegraphics[width =\linewidth]{img/Figure_1.png}}
 \end{figure}
 
-\lipsum[1-2]  
+\lipsum[1-2]   % Substituir
 \subsection*{Visualização 2:}
 \begin{figure}[H]
     \centerline{\includegraphics[width = \linewidth]{img/Figure_2.png}}
@@ -259,19 +260,22 @@ onde \(\{(x_i, y_i)\}\) são os dados observados com \(x_i, y_i > 0\).
 \begin{figure}[H]
     \centerline{\includegraphics[width = \linewidth]{img/Figure_3.png}}
 \end{figure}
-\lipsum[1-2]
+\lipsum[1-2] % Substituir
 
 \subsection*{Visualização 4:}
 \begin{figure}[H]
     \centerline{\includegraphics[width = \linewidth]{img/Figure_4.png}}
 \end{figure}
-\lipsum[1-2]
+\lipsum[1-2] % Substituir
 
 \section*{Tabelas}
+
 \subsection*{Tabela 1}
+
 \begin{table}[H]
 \centering
 \caption{Tempo útil médio de exibição por país de origem}
+\begin{small}
 \begin{tabular}{l r}
 \hline
 \textbf{País de Origem} & \textbf{Tempo Útil Médio (dias)} \\
@@ -291,40 +295,88 @@ ALEMANHA & 55.44 \\
 EMIRADOS ÁRABES UNIDOS & 55.00 \\
 PANAMÁ & 54.00 \\
 HOLANDA & 41.00 \\
+\end{tabular}
+\end{small}
+
+\begin{center}
+\small
+\ldots
+\end{center}
+
+\end{table}
+ 
+\lipsum[1] % Substituir
+
+\pagebreak
+\subsection*{Tabela 2}
+
+\begin{table}[H]
+\centering
+\caption{Estatísticas de público por filme: média, desvio padrão, moda do dia da semana, semana do mês e mês de exibição}
+\begin{small}
+\begin{tabularx}{\textwidth}{X r r l c c}
+\hline
+\textbf{Título} & \textbf{Média Público} & \textbf{Desvio ($\sigma$)} & \textbf{Moda Dia} & \textbf{Moda Semana} & \textbf{Moda Mês} \\
+\hline
+FALE COMIGO & 227.83 & 299.91 & Quinta-feira & 3 & 8 \\
+GODZILLA MINUS ONE & 227.07 & 216.66 & Quinta-feira & 2 & 12 \\
+DECISÃO DE PARTIR & 211.83 & 231.45 & Quinta-feira & 2 & 1 \\
+13 EXORCISMOS & 205.23 & 154.26 & Quinta-feira & 4 & 2 \\
+BARBIE & 181.65 & 241.66 & Sábado & 4 & 8 \\
+TRIÂNGULO DA TRISTEZA & 180.03 & 208.68 & Quinta-feira & 2 & 2 \\
+THE CHOSEN... & 179.42 & 102.65 & Quinta-feira & 1 & 9 \\
+TUDO EM TODO... & 169.97 & 197.06 & Quinta-feira & 3 & 3 \\
+SAPATINHO VERMELHO... & 161.00 & --- & Quinta-feira & 3 & 4 \\
+ENCANTO & 160.00 & --- & Quarta-feira & 2 & 12 \\
+
+\end{tabularx}
+\end{small}
+\begin{center}
+$\ldots$
+\end{center}
+\end{table}
+
+\lipsum[1] % Substituir
+
+\begin{landscape}
+\subsection*{Tabela 3}
+\begin{table}[H]
+\centering
+\small
+\caption{Métricas de Exibição por Distribuidora}
+\begin{tabular}{p{5cm}rrrrr}
+\hline
+\textbf{Distribuidora} & \textbf{Público} & \textbf{Total de Sessões} & \textbf{Média por Sessão} & \textbf{Desvio ($\sigma$)} & \textbf{Tempo Útil Médio (dias)} \\
+\hline
+WARNER BROS. (SOUTH) INC. & 52.935.246 & 688.130 & 76,93 & 116,40 & 96,24 \\
+THE WALT DISNEY COMPANY (BRASIL) LTDA. & 24.273.591 & 341.583 & 71,06 & 89,57 & 83,76 \\
+SM DISTRIBUIDORA DE FILMES LTDA & 9.547.406 & 195.485 & 48,84 & 70,37 & 30,52 \\
+COLUMBIA TRISTAR FILMES DO BRASIL LTDA & 8.343.669 & 181.091 & 46,07 & 67,41 & 97,00 \\
+PARAMOUNT PICTURES BRASIL DISTRIBUIDORA DE FILMES LTDA & 7.870.782 & 151.971 & 51,79 & 64,63 & 155,94 \\
+DIAMOND FILMS DO BRASIL PRODUÇÃO E DISTRIBUIÇÃO DE FILMES LTDA & 1.993.412 & 22.267 & 89,52 & 161,46 & 36,24 \\
+WMIX DISTRIBUIDORA LTDA. & 1.919.667 & 71.127 & 26,99 & 37,84 & 57,29 \\
+VITRINE FILMES LTDA & 531.904 & 10.163 & 52,34 & 89,98 & 33,89 \\
+ANTONIO FERNANDES FILMES LTDA & 444.162 & 9.968 & 44,56 & 56,83 & 46,80 \\
+UNITED CINEMAS INTERNATIONAL BRASIL LTDA. & 357.937 & 8.165 & 43,84 & 60,57 & 9,80 \\
+CINECOLOR DO BRASIL LTDA & 316.779 & 9.411 & 33,66 & 47,82 & 10,54 \\
+FREESPIRIT DISTRIBUIDORA DE FILMES LTDA. & 225.561 & 11.002 & 20,50 & 27,08 & 40,25 \\
+SA DISTRIBUIDORA DE CONTEÚDO AUDIOVISUAL LTDA & 216.849 & 955 & 227,07 & 216,66 & 27,00 \\
+PLAYARTE PICTURES ENTRETENIMENTOS LTDA. & 191.989 & 10.282 & 18,67 & 23,70 & 25,40 \\
+H2O DISTRIBUIDORA DE FILMES LTDA & 185.049 & 5.893 & 31,40 & 59,81 & 42,67 \\
+
+
 
 
 
 \end{tabular}
 \begin{center}
-\ldots
-\end{center}
-\end{table}
-\subsection*{Tabela 2}
-\begin{table}[H]
-\centering
-\caption{Estatísticas de público por filme: média, desvio padrão e moda do dia da semana}
-\begin{tabularx}{\textwidth}{X r r l}
-\hline
-\textbf{Título} & \textbf{Média de Público} & \textbf{Desvio Padrão} & \textbf{Moda Dia} \\
-\hline
-FALE COMIGO & 227.83 & 299.91 & Quinta-feira \\
-GODZILLA MINUS ONE & 227.07 & 216.66 & Quinta-feira \\
-DECISÃO DE PARTIR & 211.83 & 231.45 & Quinta-feira \\
-13 EXORCISMOS & 205.23 & 154.26 & Quinta-feira \\
-BARBIE & 181.65 & 241.66 & Sábado \\
-TRIÂNGULO DA TRISTEZA & 180.03 & 208.68 & Quinta-feira \\
-THE CHOSEN - OS ESCOLHIDOS - TEMPORADA 4 - PARTE 1 & 179.42 & 102.65 & Quinta-feira \\
-TUDO EM TODO O LUGAR AO MESMO TEMPO & 169.97 & 197.06 & Quinta-feira \\
-SAPATINHO VERMELHO E OS SETE ANÕES & 161.00 & --- & Quinta-feira \\
-ENCANTO & 160.00 & --- & Quarta-feira \\
-
-
-
-\end{tabularx}
-\begin{center}
 $\ldots$
 \end{center}
 \end{table}
+\end{landscape}
+
+
+\lipsum[1] % Substituir
 
 
 \begin{thebibliography}{99}

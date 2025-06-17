@@ -7,8 +7,8 @@ Este repositório contém o trabalho da Avaliação 2 da disciplina de Introduç
 ## Estrutura do Projeto
 - `source/bilheteria.db`: Banco de dados SQLite contendo informações sobre filmes, sessões e bilheteira.
 - `source/Documentacao_bilheteriaBD.txt`: Arquivo de notas para auxiliar no manejo da base de dados
-- `source/a2p1.py`: Parte 1 da Avaliação 2.
-- `source/a2p2.py`: Parte 2 da Avaliação 2.
+- `source/a2_parte1.py`: Parte 1 da Avaliação 2.
+- `source/a2_parte2.py`: Parte 2 da Avaliação 2.
 - `source/ModuloA2.py`: Módulo com funções para o manejo da base de dados.
 - `tex/relatorio.bib`: Arquivo de referências bibliográficas.
 - `tex/relatorio.tex`: Documento em LaTeX que compila o relatório do trabalho.
@@ -26,4 +26,3 @@ Na parte 1 são respondidas as seguintes questões:
 - Bibliotecas: `pandas`, `matplotlib`, `numpy`, `statsmodels`, entre outras ... (instale usando `pip install -r requirements.txt` em sua venv).
 - TeX Live
 - SQLIte 3
-
