@@ -36,8 +36,7 @@
 \maketitle
 
 \begin{abstract}
-
-\lipsum[1-2]  % Substituir
+Este trabalho analisa dados de sessões de cinema no Brasil usando Python e as bibliotecas \texttt{pandas}, \texttt{matplotlib} e \texttt{seaborn}. Como entregáveis, foram desenvolvidas respostas para cinco questões propostas, com produção de tabelas e gráficos que sintetizam os resultados das análises realizadas. Essas análises incluem o cálculo de métricas como público total, tempo médio de exibição e distribuição geográfica das sessões. As visualizações destacam padrões como a concentração regional do público, variações no tempo de exibição entre países e diferenças entre filmes brasileiros e estrangeiros. O código-fonte, com versionamento ativo, está disponível no GitHub: \url{https://github.com/Gontijo8199/A2-IntroComp/tree/main}.
 \end{abstract}
 \pagebreak
 \section{Introdução}
@@ -45,27 +44,34 @@ Este trabalho tem como objetivo analisar os dados contidos no arquivo \texttt{bi
 
 \section{Análise exploratória dos dados}
 
-O arquivo bilheteria.db contem sete tabelas nas quais utilizamos como dados para a realização deste trabalho,
-que são: distribuidora, grupo_exibidor, sessao, exibidor, complexo, sala e filme.
+O arquivo \texttt{bilheteria.db} contém sete tabelas utilizadas como base de dados para a realização deste trabalho:
 
-sessao: Possui 1748362 linhas e tem as colunas: id, filme_id, sala_id, publico e data_exibição. Servindo assim para obter dados sobre as sessões de cinema
+\begin{itemize}
+    \item \texttt{sessao}: Possui 1.748.362 linhas e as colunas \texttt{id}, \texttt{filme\_id}, \texttt{sala\_id}, \texttt{publico} e \texttt{data\_exibição}, servindo para obter dados sobre as sessões de cinema.
 
-sala: Possui 3230 linhas e tem as colunas: id, nome e from_complexo. Servindo assim para obter dados das salas de cinema
+    \item \texttt{sala}: Possui 3.230 linhas e as colunas \texttt{id}, \texttt{nome} e \texttt{from\_complexo}, permitindo o acesso às informações sobre as salas de cinema.
 
-complexo: Possui 682 linhas e tem as colunhas: id, municipio, UF e from_exibidor. Servindo assim para obter dados sobre os municipios na qual foram exibidos os filmes
+    \item \texttt{complexo}: Possui 682 linhas e as colunas \texttt{id}, \texttt{municipio}, \texttt{UF} e \texttt{from\_exibidor}, contendo os dados sobre os municípios onde os filmes foram exibidos.
 
-exibidor: possui 179 linhas e tem as colunas: id e from_grupo
+    \item \texttt{exibidor}: Possui 179 linhas e as colunas \texttt{id} e \texttt{from\_grupo}, relacionadas aos exibidores responsáveis pelos complexos.
 
-distribuidora: Possui 71 linhas e tem as colunas: id, nome e cnpj. Servindo assim para obter as informações sobre as distribuidoras sobre cada filme
+    \item \texttt{distribuidora}: Possui 71 linhas e as colunas \texttt{id}, \texttt{nome} e \texttt{cnpj}, permitindo identificar as distribuidoras responsáveis por cada filme.
 
-grupo_exibidor: Possui 63 linhas e somente a coluna id
+    \item \texttt{grupo\_exibidor}: Possui 63 linhas e apenas a coluna \texttt{id}, representando os grupos aos quais os exibidores pertencem.
 
-filme: Possui 514 linhas e tem as colunas: id, titulo_original, titulo_br, cpb_roe, pais_origem e from_distribuidora. Servindo assim para obter dados sobre cada filme exibido nos cinemas.
-
+    \item \texttt{filme}: Possui 514 linhas e as colunas \texttt{id}, \texttt{titulo\_original}, \texttt{titulo\_br}, \texttt{cpb\_roe}, \texttt{pais\_origem} e \texttt{from\_distribuidora}, contendo informações detalhadas sobre cada filme exibido.
+\end{itemize}
+\pagebreak
 \section{Análise do Código}
-Nesta seção, cada aspecto que compõe a Parte Um do trabalho será analisado de forma minuciosa, ou seja, as cinco questões propostas e os módulos de apoio apresentados.
+Nesta seção, cada aspecto que compõe a Parte 1 do trabalho será analisado de forma minuciosa, ou seja, as cinco questões propostas e os módulos de apoio apresentados.
 \subsection*{Módulo Auxiliar A2}
-Além das funções apresentadas no caderno Jupyter, \texttt{carrega\_tabela} e \texttt{lista\_tabelas}, foi também implementada a função \texttt{queryconn}, que recebe como parâmetros a base de dados e a consulta SQL. Essa função permite a execução de \textit{queries} de forma mais flexível, facilitando alterações e prototipagens durante o desenvolvimento.
+O Modulo \texttt{ModuloA2.py} foi importado em ambos arquivos \texttt{a2\_parte1.py} e \texttt{a2\_parte2.py}.
+
+Além das funções \texttt{carrega\_tabela} e \texttt{lista\_tabelas}, foi implementada a função \texttt{queryconn}, que recebe como parâmetros o caminho da base de dados e uma consulta SQL. Utiliza o gerenciador de contexto \texttt{with} para abrir uma conexão temporária com o banco, garantindo o fechamento automático dos recursos após a execução.
+
+Dentro da função, é criado um \texttt{cursor}, que permite executar comandos SQL diretamente no banco de dados. O método \texttt{fetchall()} é usado para recuperar todas as linhas resultantes da execução da consulta. A consulta propriamente dita é executada pela função \texttt{read\_sql\_query()}\footnote{A função \texttt{read\_sql\_query()} da biblioteca \texttt{pandas} executa uma consulta SQL em uma conexão de banco de dados e retorna os resultados em um \texttt{DataFrame}, facilitando a manipulação dos dados em Python.}, que retorna os dados diretamente em um \texttt{DataFrame}.
+
+
 \linespread{1}
 \begin{lstlisting}
 AUTORES = ['Nathan Loose Kuipper', 'Rafael Gontijo Ferreira']
@@ -80,7 +86,7 @@ def queryconn(database, query):
     with sqlite3.connect(database) as conn:
         cursor = conn.cursor()
         cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-        tables = cursor.fetchall()
+        tables = cursor.fetchall() # caso precise
 
         df = pd.read_sql_query(query, conn)
         
@@ -97,9 +103,11 @@ def lista_tabelas(db_filename):
 if __name__ == '__main__':
     print("Importe esse modulo para auxilar com o manejo da base de dados!")
 \end{lstlisting}
+\pagebreak
 \linespread{1.5}
 \subsection*{Questão 1}
-Na \textbf{Questão 1}, foi utilizado o método \texttt{groupby()} para agrupar os dados por \texttt{filme\_id} e calcular a soma do público com \texttt{sum()}. O método \texttt{reset\_index()} foi aplicado para transformar o índice em coluna. A função \texttt{map()} foi usada para substituir os IDs dos filmes pelos respectivos títulos, com apoio do método \texttt{loc[]}.
+Na \textbf{Questão 1}, foi utilizado o método \texttt{groupby()} para agrupar os dados por \texttt{filme\_id} e calcular a soma do público com \texttt{sum()}. O método \texttt{reset\_index()} foi aplicado para transformar o índice em coluna. A função \texttt{map()} foi usada para substituir os IDs dos filmes pelos respectivos títulos, com apoio do método \texttt{loc[]}.  \footnote{O método \texttt{loc[]} permite selecionar linhas e colunas com base em rótulos ou condições.}
+
 \linespread{1}
 \begin{lstlisting}
 def questao1():
@@ -196,7 +204,7 @@ Na \textbf{Questão 4}, as tabelas foram integradas usando \texttt{merge()}. O m
 
 \subsection*{Questão 5}
 \linespread{1.5}
-Na \textbf{Questão 5}, além de \texttt{merge()} e \texttt{rename()}, foi criada uma nova coluna \texttt{tipo} com o método \texttt{apply()} e uma função \texttt{lambda} para classificar os filmes como \texttt{BR} ou \texttt{ESTRANGEIRO}. Após o \texttt{groupby()} por cidade e tipo de filme, os dados foram reorganizados com \texttt{pivot()} e os valores nulos tratados com \texttt{fillna(0)}.
+Na \textbf{Questão 5}, além de \texttt{merge()} e \texttt{rename()}, foi criada uma nova coluna \texttt{tipo} com o método \texttt{apply()} \footnote{O método \texttt{apply()} permite aplicar uma função (como uma \texttt{lambda}) a cada elemento de uma coluna ou linha de um \texttt{DataFrame}.} e uma função \texttt{lambda} para classificar os filmes como \texttt{BR} ou \texttt{ESTRANGEIRO}. Após o \texttt{groupby()} por cidade e tipo de filme, os dados foram reorganizados com \texttt{pivot()} \footnote{O método \texttt{pivot()} reorganiza os dados, transformando valores únicos de uma coluna em novas colunas.} e os valores nulos tratados com \texttt{fillna(0)}.
 \linespread{1}
 \begin{lstlisting}
     def questao5():
@@ -226,22 +234,25 @@ Na \textbf{Questão 5}, além de \texttt{merge()} e \texttt{rename()}, foi criad
     return tabela_final
 
 \end{lstlisting}
+
 \pagebreak
+\linespread{1.5}
 \section{Visualizações}
 \subsection*{Visualização 1:}
 \begin{figure}[H]
     \centerline{\includegraphics[width =\linewidth]{img/Figure_1.png}}
 \end{figure}
+A visualização apresenta a variação semanal da média de público ao longo de 2023, com dados diários agregados por data de exibição e convertidos para o tipo \texttt{datetime}. As datas foram transformadas em períodos semanais usando \texttt{dt.to\_period('W')} e uma função \texttt{lambda} para extrair o início da semana, permitindo o cálculo da média, mínimo e máximo de público semanal.
 
-A Visualização acima apresenta a variação da média semanal de público ao longo do ano de 2023. O gráfico de linha exibe o valor médio de público registrado por semana, enquanto a faixa sombreada representa o intervalo entre os valores mínimo e máximo observados no período, oferecendo uma ideia da dispersão dos dados. É possível observar que o público apresenta grandes autos e baixos ao longo do ano, sugerindo que terá um grande público nas estreias de grandes filmes ou feriados prolongados Como observado em julho.
+No gráfico, a faixa sombreada criada com \texttt{fill\_between} destaca a variação entre os valores mínimo e máximo, enquanto a linha com marcadores mostra a média semanal. Observa-se grande variação na audiência ao longo do ano, com picos em datas estratégicas, possivelmente relacionados a estreias de filmes e feriados, como o aumento notável registrado em julho. Ajustes no formato do eixo temporal e no estilo visual reforçam a clareza e facilitam a interpretação dos dados.
+
+
 \subsection*{Visualização 2:}
 \begin{figure}[H]
     \centerline{\includegraphics[width = \linewidth]{img/Figure_2.png}}
 \end{figure}
 
-A visualização acima relaciona o número de salas em que um filme foi exibido e o seu público total, considerando apenas filmes exibidos em 10 salas ou mais. Com ele, pode-se observar que quanto mais salas um filme ocupa, maior tende a ser o público.
-
-
+A visualização relaciona o número de salas em que um filme foi exibido ao seu público total, considerando apenas filmes exibidos em 10 ou mais salas. Observa-se que quanto maior a quantidade de salas, maior tende a ser o público. A linha de regressão referente aos filmes americanos é mais acentuada que a dos demais grupos, indicando que o público cresce mais rapidamente com o número de salas para esses filmes. Além disso, essa reta atinge faixas de público entre \(10^{6}\) e \(10^{7}\), enquanto os demais permanecem abaixo desse intervalo.
 
 O modelo de regressão linear no espaço logarítmico é dado por:
 
@@ -249,46 +260,50 @@ O modelo de regressão linear no espaço logarítmico é dado por:
 \log_{10}(y) = a \cdot \log_{10}(x) + b
 \]
 
-onde:
-\begin{itemize}
-    \item \(y\) representa a quantidade de salas,
-    \item \(x\) representa o público,
-    \item \(a\) é o coeficiente angular (inclinação) da reta,
-    \item \(b\) é o intercepto da reta.
-\end{itemize}
-
-\bigskip
-
-A transformação para o espaço original é dada por:
+onde \(y\) é a quantidade de salas, \(x\) o público, \(a\) a inclinação e \(b\) o intercepto da reta. No espaço original, a relação é:
 
 \[
 y = 10^{b} \cdot x^{a}
 \]
+
+Os parâmetros são estimados minimizando o erro quadrático:
+
 \[
-\min_{a,b} \sum_{i} \left( \log_{10}(y_i) - \left(a \cdot \log_{10}(x_i) + b \right) \right)^2
+\min_{a,b} \sum_{i} \left( \log_{10}(y_i) - (a \cdot \log_{10}(x_i) + b) \right)^2
 \]
 
-onde \(\{(x_i, y_i)\}\) são os dados observados com \(x_i, y_i > 0\).
+com dados \(\{(x_i,y_i)\}\) positivos.
+
+No código, os dados são agrupados por filme, somando público e salas, e filtrados para filmes exibidos em pelo menos 10 salas. As variáveis são transformadas em \(\log_{10}\) para linearizar a relação. Para cada grupo de país (Estados Unidos e estrangeiros), ajusta-se uma regressão linear via \texttt{statsmodels} \texttt{OLS}. O gráfico exibe pontos e linhas de regressão em escala log-log, com cores distintas, facilitando a visualização e destacando diferenças entre os grupos. A grade tracejada e fontes adequadas melhoram a legibilidade.
 
 \subsection*{Visualização 3:}
 \begin{figure}[H]
     \centerline{\includegraphics[width = \linewidth]{img/Figure_3.png}}
 \end{figure}
+A visualização foi dividida em dois gráficos de barras horizontais:
 
-A visualização apresentada foi dividida em dois gráficos de barras horizontais, à esquerda, podemos comparar a bilheteria do cinema brasileiro no cenário global\\
-enquanto no da direita podemos comparar no cenário nacional.
+\begin{itemize}
+    \item À esquerda, compara-se a bilheteria do cinema brasileiro no cenário global, destacando o Brasil com cor diferente para facilitar a identificação.
+    \item À direita, apresenta-se a bilheteria no cenário nacional, com destaque para as três cidades com maior público, realçadas em cor distinta.
+\end{itemize}
 
+Essa diferenciação de cores tem o objetivo de garantir uma visualização clara e objetiva, facilitando a interpretação dos dados para o público-alvo.
 
-Vale ressaltar que foi destacado com uma cor diferente o Brasil no primeiro gráfico e no segundo destacamos os três primeiros. Para que assim, possamos garantir uma\\
-visualização mais clara e objetiva para quem irá vê-la.
+\vspace{0.3cm}
+
+No código, os dados são agrupados e somados para público e salas por filme, e então agrupados por país de origem para o gráfico global. No gráfico nacional, são filtradas as sessões de filmes brasileiros, somando o público por município e selecionando as dez cidades com maior bilheteria. A categorização das três principais cidades permite seu destaque visual.
+
+Os gráficos usam escala linear, cores contrastantes e legendas removidas para evitar poluição visual. O uso de \texttt{seaborn.barplot} facilita a criação das barras horizontais com as categorias destacadas. As anotações numéricas ao lado das barras indicam os valores exatos, melhorando a compreensão dos dados. A grade tracejada e a padronização das fontes garantem legibilidade e estética consistentes.
+
 
 \subsection*{Visualização 4:}
 \begin{figure}[H]
     \centerline{\includegraphics[width = \linewidth]{img/Figure_4.png}}
 \end{figure}
 
-Este gráfico de linha mostra a quantidade de filmes em função do tempo que permaneceram em cartaz, agrupados por continente. Com ele, é possível observar que a América do Norte possui uma indústria cinematográfica\\
-com maior capacidade de sustentar filmes em exibição por longos períodos. Enquanto que em continentes como África e Oceania, os filmes tendem a ter ciclos de exibição mais curtos, refletindo limitações de mercado ou de distribuição.
+O código realiza múltiplos \texttt{merge} entre as tabelas \texttt{sessao}, \texttt{filme}, \texttt{sala} e \texttt{complexo} para consolidar os dados necessários. A coluna \texttt{data\_exibicao} é convertida para o formato \texttt{datetime} para permitir o cálculo correto do intervalo entre a primeira e a última exibição de cada filme, definido como \texttt{tempo\_util\_dias}. Cada filme é associado a um continente por meio de um mapeamento manual baseado no país de origem.
+
+A contagem decrescente de filmes exibidos por no mínimo determinado número de dias é calculada para cada continente, permitindo comparar a longevidade média dos filmes por região. A visualização evidencia que a América do Norte mantém filmes em exibição por períodos significativamente maiores, enquanto continentes como África e Oceania apresentam ciclos de exibição mais curtos.
 
 \section{Tabelas}
 

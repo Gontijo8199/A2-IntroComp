@@ -11,7 +11,7 @@ def queryconn(database, query):
     with sqlite3.connect(database) as conn:
         cursor = conn.cursor()
         cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-        tables = cursor.fetchall()
+        tables = cursor.fetchall() # caso precise
 
         df = pd.read_sql_query(query, conn)
         

@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1750268940.57505 "/home/rafa/programacao/A2-IntroComp/tex/relatorio.tex" "relatorio.pdf" "relatorio" 1750268941.99155 0
-  "/home/rafa/programacao/A2-IntroComp/tex/relatorio.tex" 1750268940.34264 19358 3a9fe9b831c2f8464b31236d8b7c10ca ""
+["pdflatex"] 1750283183.02426 "/home/rafa/programacao/A2-IntroComp/tex/relatorio.tex" "relatorio.pdf" "relatorio" 1750283184.85345 0
+  "/home/rafa/programacao/A2-IntroComp/tex/relatorio.tex" 1750283182.73571 25222 2d15af1f746db495de4da18fed81baa4 ""
   "/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1742685315 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1742685315 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1742685315 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
@@ -130,9 +130,9 @@
   "img/Figure_2.png" 1750182486.62651 110138 3463cf4a234016b2b6810207290a0407 ""
   "img/Figure_3.png" 1750160331.78451 118690 e76fcadf7476920a0fdf614785ad2cd5 ""
   "img/Figure_4.png" 1750184239.44816 107018 639af1c3f62d382367fa806ab3a603ab ""
-  "relatorio.aux" 1750268941.90078 1306 651d686313766a8f4430c759f6db5165 "pdflatex"
-  "relatorio.out" 1750268941.90078 431 133a99524b332f765900f4ac6ac78322 "pdflatex"
-  "relatorio.tex" 1750268940.34264 19358 3a9fe9b831c2f8464b31236d8b7c10ca ""
+  "relatorio.aux" 1750283184.76566 1435 0049fbd47973b349ccddffad858abe84 "pdflatex"
+  "relatorio.out" 1750283184.76666 639 3b348cca3eb0e918fa69d796d5948d77 "pdflatex"
+  "relatorio.tex" 1750283182.73571 25222 2d15af1f746db495de4da18fed81baa4 ""
   (generated)
   "relatorio.aux"
   "relatorio.log"
