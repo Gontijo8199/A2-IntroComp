@@ -42,6 +42,25 @@
 \section{Introdução}
 Este trabalho tem como objetivo analisar os dados contidos no arquivo \texttt{bilheteria.db}, referentes a sessões de cinema realizadas em diversos complexos no país. A partir dessas informações, foram respondidas as questões propostas, com a realização de agrupamentos e a geração de visualizações que fornecem \textit{insights} sobre a exibição e o consumo de filmes no Brasil. Utilizando a linguagem \texttt{Python} e bibliotecas como \texttt{pandas}, \texttt{matplotlib} e \texttt{seaborn}, foi feita a limpeza e análise dos dados, além da construção de tabelas e gráficos que facilitam a compreensão do cenário cinematográfico nacional.
 
+\section{Análise exploratória dos dados}
+
+O arquivo bilheteria.db contem sete tabelas nas quais utilizamos como dados para a realização deste trabalho,
+que são: distribuidora, grupo_exibidor, sessao, exibidor, complexo, sala e filme.
+
+sessao: Possui 1748362 linhas e tem as colunas: id, filme_id, sala_id, publico e data_exibição. Servindo assim para obter dados sobre as sessões de cinema
+
+sala: Possui 3230 linhas e tem as colunas: id, nome e from_complexo. Servindo assim para obter dados das salas de cinema
+
+complexo: Possui 682 linhas e tem as colunhas: id, municipio, UF e from_exibidor. Servindo assim para obter dados sobre os municipios na qual foram exibidos os filmes
+
+exibidor: possui 179 linhas e tem as colunas: id e from_grupo
+
+distribuidora: Possui 71 linhas e tem as colunas: id, nome e cnpj. Servindo assim para obter as informações sobre as distribuidoras sobre cada filme
+
+grupo_exibidor: Possui 63 linhas e somente a coluna id
+
+filme: Possui 514 linhas e tem as colunas: id, titulo_original, titulo_br, cpb_roe, pais_origem e from_distribuidora. Servindo assim para obter dados sobre cada filme exibido nos cinemas.
+
 \section{Análise do Código}
 Nesta seção, cada aspecto que compõe a Parte Um do trabalho será analisado de forma minuciosa, ou seja, as cinco questões propostas e os módulos de apoio apresentados.
 \subsection*{Módulo Auxiliar A2}
