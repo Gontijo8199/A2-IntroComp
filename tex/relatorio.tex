@@ -13,8 +13,8 @@
 \usepackage{lipsum}
 \usepackage{tabularx}
 \usepackage{pdflscape}
-
-
+\usepackage{setspace}
+\setstretch{1.5}
 \lstset{
   language=Python,
   basicstyle=\ttfamily\small,
@@ -36,28 +36,18 @@
 
 \begin{abstract}
 
-\lipsum[1-4]  % Substituir
+\lipsum[1-2]  % Substituir
 \end{abstract}
 \pagebreak
 \section{Introdução}
- Este trabalho tem como objetivo analisar os dados contido no arquivo bilheteria.db\\
-provenientes de sessões de cinema realizadas em diversos complexos espalhados pelo país\\
-A partir dessas informações, foi possível responder as questões propostas, realizar agrupamentos\\
-agrupamentos e gerar visualizações que revelam padrões de exibição e consumo de filmes nas cidades \\
-brasileiras.
- Utilizando a linguagem Python e bibliotecas como pandas, matplotlib e seaborn, foi realizada a limpeza\\
-e análise dos dados, e também construídas tabelas e gráficos que ajudam a compreender o comportamento do \\
-público em diferentes regiões do Brasil e no mundo.
-
-
+Este trabalho tem como objetivo analisar os dados contidos no arquivo \texttt{bilheteria.db}, referentes a sessões de cinema realizadas em diversos complexos no país. A partir dessas informações, foram respondidas as questões propostas, com a realização de agrupamentos e a geração de visualizações que fornecem \textit{insights} sobre a exibição e o consumo de filmes no Brasil. Utilizando a linguagem \texttt{Python} e bibliotecas como \texttt{pandas}, \texttt{matplotlib} e \texttt{seaborn}, foi feita a limpeza e análise dos dados, além da construção de tabelas e gráficos que facilitam a compreensão do cenário cinematográfico nacional.
 
 \section{Análise do Código}
-Introdução da Análise do Código
+Nesta seção, cada aspecto que compõe a Parte Um do trabalho será analisado de forma minuciosa, ou seja, as cinco questões propostas e os módulos de apoio apresentados.
 \subsection*{Módulo Auxiliar A2}
-Módulo que contém funções para auxiliar no manejo da base de dados
-Path:
+Além das funções apresentadas no caderno Jupyter, \texttt{carrega\_tabela} e \texttt{lista\_tabelas}, foi também implementada a função \texttt{queryconn}, que recebe como parâmetros a base de dados e a consulta SQL. Essa função permite a execução de \textit{queries} de forma mais flexível, facilitando alterações e prototipagens durante o desenvolvimento.
+\linespread{1}
 \begin{lstlisting}
-
 AUTORES = ['Nathan Loose Kuipper', 'Rafael Gontijo Ferreira']
 
 import pandas as pd 
@@ -78,34 +68,19 @@ def queryconn(database, query):
     
 def carrega_tabela(database, tabela):
 
-    with sqlite3.connect(database) as conn:
-        query = f"SELECT * FROM {tabela}"
-        df = pd.read_sql_query(query, conn)
-    return df
+    ...
 
 def lista_tabelas(db_filename):
 
-    # Connect to the SQLite database
-    # conn = sqlite3.connect(db_filename)
-    with sqlite3.connect(db_filename) as conn:
-        cursor = conn.cursor()
-        cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-        tables = cursor.fetchall()
-
-        table_row_counts = []
-        for table in tables:
-            table_name = table[0]
-            query = f"SELECT COUNT(*) FROM {table_name};"
-            cursor.execute(query)
-            row_count = cursor.fetchone()[0]
-            table_row_counts.append({"Table": table_name, "Row_Count": row_count})
-
-        return pd.DataFrame(table_row_counts)
+   ...
     
 if __name__ == '__main__':
     print("Importe esse modulo para auxilar com o manejo da base de dados!")
 \end{lstlisting}
+\linespread{1.5}
 \subsection*{Questão 1}
+Na \textbf{Questão 1}, foi utilizado o método \texttt{groupby()} para agrupar os dados por \texttt{filme\_id} e calcular a soma do público com \texttt{sum()}. O método \texttt{reset\_index()} foi aplicado para transformar o índice em coluna. A função \texttt{map()} foi usada para substituir os IDs dos filmes pelos respectivos títulos, com apoio do método \texttt{loc[]}.
+\linespread{1}
 \begin{lstlisting}
 def questao1():
     
@@ -119,17 +94,16 @@ def questao1():
     
     return dfsessao
 \end{lstlisting}
+\linespread{1.5}
 \subsection*{Questão 2}
-
+Na \textbf{Questão 2}, novamente foi usado \texttt{groupby()} com \texttt{sum()} para calcular o público total por filme. O método \texttt{merge()}\footnote{No método \texttt{merge()}, o parâmetro \texttt{left\_on} especifica a coluna da tabela esquerda usada para junção, enquanto \texttt{right\_on} indica a coluna correspondente da tabela direita. O parâmetro \texttt{how} determina o tipo de junção: \texttt{'left'} mantém todas as linhas da tabela esquerda, incorporando as correspondências da direita; \texttt{'right'} faz o oposto; \texttt{'inner'} retorna apenas as linhas correspondentes em ambas; e \texttt{'outer'} retorna todas as linhas de ambas as tabelas, preenchendo com \texttt{NaN} onde não há correspondência.} integrou os dados das sessões com a tabela de filmes. O \texttt{fillna(0)} garantiu que filmes sem sessões tivessem público zero. A ordenação foi feita com \texttt{sort\_values()} e a seleção do maior foi realizada com \texttt{iloc[0]}.
+\linespread{1}
 \begin{lstlisting}
   def questao2():
     dfilme = a2.carrega_tabela(PATH / 'bilheteria.db', 'filme')
     dsessao = a2.carrega_tabela(PATH / 'bilheteria.db', 'sessao')
-    
     dfsessao = dsessao.groupby(by=['filme_id'])['publico'].sum().reset_index()
-    
     merged_df = dfilme.merge(dfsessao, left_on='id', right_on='filme_id', how='left')
-    
     merged_df['publico'] = merged_df['publico'].fillna(0)
     
     paises = merged_df['pais_origem'].unique()
@@ -144,9 +118,12 @@ def questao1():
     
     return dic
 \end{lstlisting}
+
+\linespread{1.5}
+\pagebreak
 \subsection*{Questão 3}
-
-
+Na \textbf{Questão 3}, o método \texttt{merge()} foi usado para unir as tabelas \texttt{sessao}, \texttt{sala} e \texttt{complexo}. O agrupamento por cidade foi feito com \texttt{groupby()} seguido de \texttt{sum()}. O resultado foi ordenado de forma decrescente com \texttt{sort\_values()} e limitado às 100 primeiras linhas com \texttt{head(100)}.
+\linespread{1}
 \begin{lstlisting}
     def questao3():
     
@@ -167,7 +144,10 @@ def questao1():
 
     return top100
 \end{lstlisting}
+\linespread{1.5}
 \subsection*{Questão 4}
+Na \textbf{Questão 4}, as tabelas foram integradas usando \texttt{merge()}. O método \texttt{rename()} foi aplicado para ajustar os nomes das colunas. O agrupamento por cidade e filme usou \texttt{groupby()} com \texttt{sum()}, seguido de uma ordenação com \texttt{sort\_values()} e seleção do filme de maior bilheteria em cada cidade usando \texttt{groupby().head(1)}.
+\linespread{1}
 \begin{lstlisting}
     def questao4():
     
@@ -195,6 +175,9 @@ def questao1():
 \end{lstlisting}
 
 \subsection*{Questão 5}
+\linespread{1.5}
+Na \textbf{Questão 5}, além de \texttt{merge()} e \texttt{rename()}, foi criada uma nova coluna \texttt{tipo} com o método \texttt{apply()} e uma função \texttt{lambda} para classificar os filmes como \texttt{BR} ou \texttt{ESTRANGEIRO}. Após o \texttt{groupby()} por cidade e tipo de filme, os dados foram reorganizados com \texttt{pivot()} e os valores nulos tratados com \texttt{fillna(0)}.
+\linespread{1}
 \begin{lstlisting}
     def questao5():
     
@@ -230,19 +213,14 @@ def questao1():
     \centerline{\includegraphics[width =\linewidth]{img/Figure_1.png}}
 \end{figure}
 
-A Visualização acima apresenta a variação da média semanal de público ao longo do ano de 2023. O gráfico\\
-de linha exibe o valor médio de público registrado por semana, enquanto a faixa sombreada representa o\\
-intervalo entre os valores mínimo e máximo observados no período, oferecendo uma ideia da dispersão dos dados.\\
- É possível observar que o público apresenta grandes autos e baixos ao longo do ano, sugerindo que terá um grande\\
-público nas estreias de grandes filmes ou feriados prolongados Como observado em julho.
+A Visualização acima apresenta a variação da média semanal de público ao longo do ano de 2023. O gráfico de linha exibe o valor médio de público registrado por semana, enquanto a faixa sombreada representa o intervalo entre os valores mínimo e máximo observados no período, oferecendo uma ideia da dispersão dos dados. É possível observar que o público apresenta grandes autos e baixos ao longo do ano, sugerindo que terá um grande público nas estreias de grandes filmes ou feriados prolongados Como observado em julho.
 \subsection*{Visualização 2:}
 \begin{figure}[H]
     \centerline{\includegraphics[width = \linewidth]{img/Figure_2.png}}
 \end{figure}
 
- A visualização acima relaciona o número de salas em que um filme foi exibido e o seu público\\
-total, considerando apenas filmes exibidos em 10 salas ou mais. Com ele, pode-se observar que\\
-quanto mais salas um filme ocupa, maior tende a ser o público.\\
+A visualização acima relaciona o número de salas em que um filme foi exibido e o seu público total, considerando apenas filmes exibidos em 10 salas ou mais. Com ele, pode-se observar que quanto mais salas um filme ocupa, maior tende a ser o público.
+
 
 
 O modelo de regressão linear no espaço logarítmico é dado por:
@@ -277,24 +255,20 @@ onde \(\{(x_i, y_i)\}\) são os dados observados com \(x_i, y_i > 0\).
     \centerline{\includegraphics[width = \linewidth]{img/Figure_3.png}}
 \end{figure}
 
-A visualização apresentada foi dividida em dois gráficos de barras horizontais,\\
-à esquerda, podemos comparar a bilheteria do cinema brasileiro no cenário global\\
-enquanto no da direita podemos comparar no cenário nacional.\\
- Vale ressaltar que foi destacado com uma cor diferente o Brasil no primeiro gráfico\\
-e no segundo destacamos os três primeiros. Para que assim, possamos garantir uma\\
-visualização mais clara e objetiva para quem irá vê-la.\\
+A visualização apresentada foi dividida em dois gráficos de barras horizontais, à esquerda, podemos comparar a bilheteria do cinema brasileiro no cenário global\\
+enquanto no da direita podemos comparar no cenário nacional.
+
+
+Vale ressaltar que foi destacado com uma cor diferente o Brasil no primeiro gráfico e no segundo destacamos os três primeiros. Para que assim, possamos garantir uma\\
+visualização mais clara e objetiva para quem irá vê-la.
 
 \subsection*{Visualização 4:}
 \begin{figure}[H]
     \centerline{\includegraphics[width = \linewidth]{img/Figure_4.png}}
 \end{figure}
 
-Este gráfico de linha mostra a quantidade de filmes em função do tempo que permaneceram\\
-em cartaz, agrupados por continente.\\
- Com ele, é possível observar que a América do Norte possui uma indústria cinematográfica\\
-com maior capacidade de sustentar filmes em exibição por longos períodos. Enquanto que em \\
-continentes como África e Oceania, os filmes tendem a ter ciclos de exibição mais curtos, \\
-refletindo limitações de mercado ou de distribuição.\\
+Este gráfico de linha mostra a quantidade de filmes em função do tempo que permaneceram em cartaz, agrupados por continente. Com ele, é possível observar que a América do Norte possui uma indústria cinematográfica\\
+com maior capacidade de sustentar filmes em exibição por longos períodos. Enquanto que em continentes como África e Oceania, os filmes tendem a ter ciclos de exibição mais curtos, refletindo limitações de mercado ou de distribuição.
 
 \section*{Tabelas}
 
