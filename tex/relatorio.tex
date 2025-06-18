@@ -40,14 +40,15 @@
 \end{abstract}
 \pagebreak
 \section{Introdução}
- Este trabalho tem como objetivo analisar os dados contido no arquivo bilheteria.db\\
-provenientes de sessões de cinema realizadas em diversos complexos espalhados pelo país\\
-A partir dessas informações, foi possível responder as questões propostas, realizar agrupamentos\\
-agrupamentos e gerar visualizações que revelam padrões de exibição e consumo de filmes nas cidades \\
+ Este trabalho tem como objetivo analisar os dados contido no arquivo bilheteria.db
+provenientes de sessões de cinema realizadas em diversos complexos espalhados pelo país.
+A partir dessas informações, foi possível responder as questões propostas, realizar agrupamentos
+agrupamentos e gerar visualizações que revelam padrões de exibição e consumo de filmes nas cidades
 brasileiras.
- Utilizando a linguagem Python e bibliotecas como pandas, matplotlib e seaborn, foi realizada a limpeza\\
-e análise dos dados, e também construídas tabelas e gráficos que ajudam a compreender o comportamento do \\
-público em diferentes regiões do Brasil e no mundo.
+
+ Utilizando a linguagem Python e bibliotecas como pandas, matplotlib e seaborn, foi realizada a limpeza
+e análise dos dados, e também construídas tabelas e gráficos que ajudam a compreender o comportamento do 
+público em diferentes regiões do Brasil e no mundo.\\
 
 
 
@@ -230,19 +231,21 @@ def questao1():
     \centerline{\includegraphics[width =\linewidth]{img/Figure_1.png}}
 \end{figure}
 
-A Visualização acima apresenta a variação da média semanal de público ao longo do ano de 2023. O gráfico\\
-de linha exibe o valor médio de público registrado por semana, enquanto a faixa sombreada representa o\\
-intervalo entre os valores mínimo e máximo observados no período, oferecendo uma ideia da dispersão dos dados.\\
- É possível observar que o público apresenta grandes autos e baixos ao longo do ano, sugerindo que terá um grande\\
+A Visualização acima apresenta a variação da média semanal de público ao longo do ano de 2023. O gráfico
+de linha exibe o valor médio de público registrado por semana, enquanto a faixa sombreada representa o
+intervalo entre os valores mínimo e máximo observados no período, oferecendo uma ideia da dispersão dos dados.
+
+ É possível observar que o público apresenta grandes autos e baixos ao longo do ano, sugerindo que terá um grande
 público nas estreias de grandes filmes ou feriados prolongados Como observado em julho.
+
 \subsection*{Visualização 2:}
 \begin{figure}[H]
     \centerline{\includegraphics[width = \linewidth]{img/Figure_2.png}}
 \end{figure}
 
- A visualização acima relaciona o número de salas em que um filme foi exibido e o seu público\\
-total, considerando apenas filmes exibidos em 10 salas ou mais. Com ele, pode-se observar que\\
-quanto mais salas um filme ocupa, maior tende a ser o público.\\
+ A visualização acima relaciona o número de salas em que um filme foi exibido e o seu público
+total, considerando apenas filmes exibidos em 10 salas ou mais. Com ele, pode-se observar que
+quanto mais salas um filme ocupa, maior tende a ser o público.
 
 
 O modelo de regressão linear no espaço logarítmico é dado por:
@@ -277,11 +280,11 @@ onde \(\{(x_i, y_i)\}\) são os dados observados com \(x_i, y_i > 0\).
     \centerline{\includegraphics[width = \linewidth]{img/Figure_3.png}}
 \end{figure}
 
-A visualização apresentada foi dividida em dois gráficos de barras horizontais,\\
-à esquerda, podemos comparar a bilheteria do cinema brasileiro no cenário global\\
+A visualização apresentada foi dividida em dois gráficos de barras horizontais,
+à esquerda, podemos comparar a bilheteria do cinema brasileiro no cenário global
 enquanto no da direita podemos comparar no cenário nacional.\\
- Vale ressaltar que foi destacado com uma cor diferente o Brasil no primeiro gráfico\\
-e no segundo destacamos os três primeiros. Para que assim, possamos garantir uma\\
+ Vale ressaltar que foi destacado com uma cor diferente o Brasil no primeiro gráfico
+e no segundo destacamos os três primeiros. Para que assim, possamos garantir uma
 visualização mais clara e objetiva para quem irá vê-la.\\
 
 \subsection*{Visualização 4:}
@@ -289,12 +292,13 @@ visualização mais clara e objetiva para quem irá vê-la.\\
     \centerline{\includegraphics[width = \linewidth]{img/Figure_4.png}}
 \end{figure}
 
-Este gráfico de linha mostra a quantidade de filmes em função do tempo que permaneceram\\
-em cartaz, agrupados por continente.\\
- Com ele, é possível observar que a América do Norte possui uma indústria cinematográfica\\
-com maior capacidade de sustentar filmes em exibição por longos períodos. Enquanto que em \\
-continentes como África e Oceania, os filmes tendem a ter ciclos de exibição mais curtos, \\
-refletindo limitações de mercado ou de distribuição.\\
+ Este gráfico de linha mostra a quantidade de filmes em função do tempo que permaneceram
+em cartaz, agrupados por continente.
+
+ Com ele, é possível observar que a América do Norte possui uma indústria cinematográfica
+com maior capacidade de sustentar filmes em exibição por longos períodos. Enquanto que em 
+continentes como África e Oceania, os filmes tendem a ter ciclos de exibição mais curtos,
+refletindo limitações de mercado ou de distribuição.
 
 \section*{Tabelas}
 
@@ -333,7 +337,12 @@ HOLANDA & 41.00 \\
 
 \end{table}
  
-\lipsum[1] % Substituir
+ Essa tabela apresenta o tempo útil médio (em dias) que os filmes permanecem em exibição nos cinemas,
+agrupados por país de origem. Esse indicador permite avaliar a longevidade média das produções cinematográficas de cada país.
+
+Com ela, pode-se notar que o tempo médio de exibição não segue estritamente o tamanho ou poder da indústria cinematográfica.
+Isso porque, países menos centrais em termos de volume de produção podem ter filmes com maior longevidade. Enquanto grandes produtores,
+como os EUA, mesmo com forte presença global, apresentam tempos mais moderados, possivelmente devido à maior rotatividade de lançamentos.
 
 \pagebreak
 \subsection*{Tabela 2}
@@ -364,7 +373,11 @@ $\ldots$
 \end{center}
 \end{table}
 
-\lipsum[1] % Substituir
+Esta tabela apresenta um conjunto de estatísticas descritivas sobre o desempenho de diferentes 
+filmes em termos de público. Os dados analisam a média de público, o desvio padrão, e a moda para três variáveis: dia, semana e mês do ano.
+
+Nela, podemos observar que o filme "Fale comigo" apresenta a maior média de público (227,83), mas 
+também o maior desvio padrão (299,91), indicando forte variação nas sessões.
 
 \begin{landscape}
 \subsection*{Tabela 3}
@@ -404,8 +417,24 @@ $\ldots$
 \end{landscape}
 
 
-\lipsum[1] % Substituir
+Esta tabela fornece estatísticas que ajudam a entender o desempenho das principais distribuidoras 
+de filmes no mercado, considerando tanto o volume de público quanto o padrão de exibição.Esses dados
+são úteis para entender tanto o alcance quanto o comportamento de exibição dos filmes conforme a estratégia de distribuição adotada.
 
+Nele podemos ver que quem lidera em todos os aspectos é a WARREN BROS. (SOUTH) INC, com ela
+contendo o maior público, maior número de sessões, e o maior tempo útil médio.
+
+\section*{Conclusão}
+
+Através desse trabalho, podemos fazer uma análise abrangente sobre o desempenho da cinematografia ao redor do mundo,
+com ênfase em métricas de bilheteria, tempo de exibição, distribuição geográfica e estratégias de distribuidoras.
+
+Por meio das visualizações, podemos tirar conclusões muito interessantes, como a de que a quinta-feira aparece com 
+destaque como o dia mais comum de estreia e exibição de pico, alinhando-se com as práticas tradicionais do setor cinematográfico. E que
+filmes com maior média de público (como Fale Comigo e Godzilla Minus One) possuem também altos desvios, sugerindo sessões com grande variação de lotação.
+
+Os dados também revelam que o mercado de cinema no Brasil possui forte concentração regional e disparidade na longevidade dos filmes,
+especialmente quando comparado a outros países. Desse modo, a cinematografia brasileira mostra-se competitiva internacionalmente e com espaço para crescimento.
 
 \begin{thebibliography}{99}
 
