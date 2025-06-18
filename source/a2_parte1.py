@@ -14,14 +14,16 @@ filmes listados?
 '''
 
 
-def questao1():
+def questao1(database):
     
-    dsessao = a2.carrega_tabela(PATH / 'bilheteria.db', 'sessao')
+    dados = PATH / database
+
+    dsessao = a2.carrega_tabela(dados, 'sessao')
     
     # agrupa por filme a soma dos publicos de todas as sessões
     dfsessao = dsessao.groupby(by=['filme_id'])['publico'].sum().reset_index() 
 
-    dfilme = a2.carrega_tabela(PATH / 'bilheteria.db', 'filme')
+    dfilme = a2.carrega_tabela(dados, 'filme')
     
     map_titulo = lambda x: dfilme.loc[dfilme['id'] == x, 'titulo_original'].item() # id -> nome do filme
     dfsessao['filme_id'] =  dfsessao['filme_id'].map(map_titulo).astype(str)
@@ -32,9 +34,12 @@ def questao1():
 2. Qual o filme de maior bilheteria em 2023, por país de origem?
 '''
 
-def questao2():
-    dfilme = a2.carrega_tabela(PATH / 'bilheteria.db', 'filme')
-    dsessao = a2.carrega_tabela(PATH / 'bilheteria.db', 'sessao')
+def questao2(database):
+
+    dados = PATH / database
+
+    dfilme = a2.carrega_tabela(dados, 'filme')
+    dsessao = a2.carrega_tabela(dados, 'sessao')
 
     # agrupa o dataframe para que fique filme e publico total
 
@@ -71,11 +76,13 @@ def questao2():
 ordenadas de forma decrescente de bilheteria.
 '''
 
-def questao3():
+def questao3(database):
+
+    dados = PATH / database
     
-    dsessao = a2.carrega_tabela(PATH / 'bilheteria.db', 'sessao')
-    dsala = a2.carrega_tabela(PATH / 'bilheteria.db', 'sala')[['id', 'from_complexo']]
-    dcomplexo = a2.carrega_tabela(PATH / 'bilheteria.db', 'complexo')[['id', 'municipio']]
+    dsessao = a2.carrega_tabela(dados, 'sessao')
+    dsala = a2.carrega_tabela(dados, 'sala')[['id', 'from_complexo']]
+    dcomplexo = a2.carrega_tabela(dados, 'complexo')[['id', 'municipio']]
 
     # junta as sessões com as salas
     df = dsessao.merge(dsala, left_on='sala_id', right_on='id', how='left')
@@ -102,12 +109,14 @@ def questao3():
 com as colunas CIDADE, FILME e BILHETERIA.
 '''
 
-def questao4():
+def questao4(database):
+
+    dados = PATH / database
     
-    dsessao = a2.carrega_tabela(PATH / 'bilheteria.db', 'sessao')
-    dsala = a2.carrega_tabela(PATH / 'bilheteria.db', 'sala')[['id', 'from_complexo']]
-    dcomplexo = a2.carrega_tabela(PATH / 'bilheteria.db', 'complexo')[['id', 'municipio']]
-    dfilme = a2.carrega_tabela(PATH / 'bilheteria.db', 'filme')[['id', 'titulo_original']]
+    dsessao = a2.carrega_tabela(dados, 'sessao')
+    dsala = a2.carrega_tabela(dados, 'sala')[['id', 'from_complexo']]
+    dcomplexo = a2.carrega_tabela(dados, 'complexo')[['id', 'municipio']]
+    dfilme = a2.carrega_tabela(dados, 'filme')[['id', 'titulo_original']]
 
     # junta a tabela de sessão e sala
     df = dsessao.merge(dsala, left_on='sala_id', right_on='id', how='left')
@@ -139,12 +148,14 @@ de filmes estrangeiros. Retorne um dataframe com as colunas CIDADE,
 BILHETERIA_BR, BILHETERIA_ESTRANGEIRA
 '''  
 
-def questao5():
+def questao5(database):
+
+    dados = PATH / database
     
-    dsessao = a2.carrega_tabela(PATH / 'bilheteria.db', 'sessao')
-    dsala = a2.carrega_tabela(PATH / 'bilheteria.db', 'sala')[['id', 'from_complexo']]
-    dcomplexo = a2.carrega_tabela(PATH / 'bilheteria.db', 'complexo')[['id', 'municipio']]
-    dfilme = a2.carrega_tabela(PATH / 'bilheteria.db', 'filme')[['id', 'pais_origem']]
+    dsessao = a2.carrega_tabela(dados, 'sessao')
+    dsala = a2.carrega_tabela(dados, 'sala')[['id', 'from_complexo']]
+    dcomplexo = a2.carrega_tabela(dados, 'complexo')[['id', 'municipio']]
+    dfilme = a2.carrega_tabela(dados, 'filme')[['id', 'pais_origem']]
 
     # Junta a sessão com a sala
     df = dsessao.merge(dsala, left_on='sala_id', right_on='id', how='left')
@@ -177,15 +188,15 @@ def questao5():
 def main():
     
     # questao1()
-    print("Questão 1: \n", questao1())
+    print("Questão 1: \n", questao1('bilheteria.db'))
     # questao2()
-    print("Questão 2: \n", questao2())
+    print("Questão 2: \n", questao2('bilheteria.db'))
     # questao3()
-    print("Questão 3: \n", questao3())
+    print("Questão 3: \n", questao3('bilheteria.db'))
     # questao4()
-    print("Questão 4: \n", questao4())
+    print("Questão 4: \n", questao4('bilheteria.db'))
     # questao5()
-    print("Questão 5: \n", questao5())
+    print("Questão 5: \n", questao5('bilheteria.db'))
     
     
     print("feito por: ", AUTORES[0],", ", AUTORES[1])
