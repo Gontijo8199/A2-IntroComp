@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1750283183.02426 "/home/rafa/programacao/A2-IntroComp/tex/relatorio.tex" "relatorio.pdf" "relatorio" 1750283184.85345 0
-  "/home/rafa/programacao/A2-IntroComp/tex/relatorio.tex" 1750283182.73571 25222 2d15af1f746db495de4da18fed81baa4 ""
+["pdflatex"] 1750355792.14123 "/home/rafa/programacao/A2-IntroComp/tex/relatorio.tex" "relatorio.pdf" "relatorio" 1750355793.7208 0
+  "/home/rafa/programacao/A2-IntroComp/tex/relatorio.tex" 1750355790.09095 27367 c61b0a5f87d9432c40ad502596d26c60 ""
   "/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1742685315 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1742685315 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1742685315 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
@@ -25,6 +25,7 @@
   "/usr/share/texmf-dist/fonts/tfm/public/cm/cmsy8.tfm" 1742685315 1120 8b7d695260f3cff42e636090a8002094 ""
   "/usr/share/texmf-dist/fonts/tfm/public/cm/cmsy9.tfm" 1742685315 1116 25a7bf822c58caf309a702ef79f4afbb ""
   "/usr/share/texmf-dist/fonts/tfm/public/cm/cmti10.tfm" 1742685315 1480 aa8e34af0eb6a2941b776984cf1dfdc4 ""
+  "/usr/share/texmf-dist/fonts/tfm/public/cm/cmti9.tfm" 1742685315 1476 cccc6cc4935c18ec3d5623b77ecb8b74 ""
   "/usr/share/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm" 1742685315 768 1321e9409b4137d6fb428ac9dc956269 ""
   "/usr/share/texmf-dist/fonts/tfm/public/cm/cmtt8.tfm" 1742685315 768 d7b9a2629a0c353102ad947dc9221d49 ""
   "/usr/share/texmf-dist/fonts/tfm/public/cm/cmtt9.tfm" 1742685315 764 c98a2af25c99b73a368cf7336e255190 ""
@@ -45,6 +46,7 @@
   "/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb" 1742685315 33993 9b89b85fd2d9df0482bd47194d1d3bf3 ""
   "/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1742685315 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb" 1742685315 37944 359e864bd06cde3b1cf57bb20757fb06 ""
+  "/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb" 1742685315 36310 f5ddc6715cc60deb16d9db5ded6a9391 ""
   "/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb" 1742685315 31099 c85edf1dd5b9e826d67c9c7293b6786c ""
   "/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb" 1742685315 24287 6b803fa9eb1ddff9112e00519b09dd9e ""
   "/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb" 1742685315 29078 718ea4567ceff944262b0f5b0800e1d9 ""
@@ -128,11 +130,11 @@
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1749123834 2009810 abe8bc165b414002ad52f7da261fbdfa ""
   "img/Figure_1.png" 1750182800.50486 178338 bf0b3d4a056aed339c8e706f39059a8e ""
   "img/Figure_2.png" 1750182486.62651 110138 3463cf4a234016b2b6810207290a0407 ""
-  "img/Figure_3.png" 1750160331.78451 118690 e76fcadf7476920a0fdf614785ad2cd5 ""
-  "img/Figure_4.png" 1750184239.44816 107018 639af1c3f62d382367fa806ab3a603ab ""
-  "relatorio.aux" 1750283184.76566 1435 0049fbd47973b349ccddffad858abe84 "pdflatex"
-  "relatorio.out" 1750283184.76666 639 3b348cca3eb0e918fa69d796d5948d77 "pdflatex"
-  "relatorio.tex" 1750283182.73571 25222 2d15af1f746db495de4da18fed81baa4 ""
+  "img/Figure_3.png" 1750353181.1401 126836 e5617416d9823a163754e275a224da3d ""
+  "img/Figure_4.png" 1750352780.17398 102052 c6a2e61f544fba91ba45dce3c0800ccd ""
+  "relatorio.aux" 1750355793.61892 1582 4675101d6f70dd1d86a5408744e19185 "pdflatex"
+  "relatorio.out" 1750355793.61992 873 847aef2a5c158f936e42581cef14508a "pdflatex"
+  "relatorio.tex" 1750355790.09095 27367 c61b0a5f87d9432c40ad502596d26c60 ""
   (generated)
   "relatorio.aux"
   "relatorio.log"

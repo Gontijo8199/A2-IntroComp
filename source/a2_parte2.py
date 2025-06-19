@@ -110,7 +110,6 @@ def grafico2():
 
     plt.xscale('log')
     plt.yscale('log')
-
     plt.grid(True, linestyle='--', linewidth=0.6)
     plt.xticks(rotation=0, fontsize=14)    # Criar a coluna de categoria
 
@@ -170,7 +169,7 @@ def grafico3():
         palette={'BRASIL': cor_brasil, 'OUTROS': cor_outros}
     )
     axes[0].set_xscale('log')
-    axes[0].set_title("Bilheteria Brasileira no Cenário Global", fontsize=18)
+    axes[0].set_title("Filmes Consumidos no Cinema Brasileiro por País de Origem", fontsize=18)
     axes[0].set_xlabel("Bilheteria (log)", fontsize=16)
     axes[0].tick_params(axis='y', labelsize=12)
     axes[0].tick_params(axis='x', labelsize=12)
@@ -187,7 +186,7 @@ def grafico3():
         dodge=False,
         palette={'Top 3': cor_cidade, 'Outras': cor_outros}
     )
-    axes[1].set_title("Bilheteria Brasileira no Cenário Nacional", fontsize=18)
+    axes[1].set_title("Consumo de Filmes Brasileiros por Unidade da Federação", fontsize=18)
 
     max_publico = top_cidades['publico'].max()
     margem = max_publico * 0.20  
@@ -323,6 +322,7 @@ def grafico4():
     plt.legend(title='Continente', fontsize=12)
     plt.xticks(fontsize=14)
     plt.yticks(fontsize=14)
+    plt.legend(title=None)
     plt.grid(True, linestyle='--', alpha=0.7)
     plt.tight_layout()
     plt.show()
@@ -512,6 +512,7 @@ def main():
     grafico4() 
     
     '''
+
     
     #plot_colortable(mcolors.CSS4_COLORS)
     #plt.show()

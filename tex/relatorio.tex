@@ -36,7 +36,7 @@
 \maketitle
 
 \begin{abstract}
-Este trabalho analisa dados de sessões de cinema no Brasil usando Python e as bibliotecas \texttt{pandas}, \texttt{matplotlib} e \texttt{seaborn}. Como entregáveis, foram desenvolvidas respostas para cinco questões propostas, com produção de tabelas e gráficos que sintetizam os resultados das análises realizadas. Essas análises incluem o cálculo de métricas como público total, tempo médio de exibição e distribuição geográfica das sessões. As visualizações destacam padrões como a concentração regional do público, variações no tempo de exibição entre países e diferenças entre filmes brasileiros e estrangeiros. O código-fonte, com versionamento ativo, está disponível no GitHub: \url{https://github.com/Gontijo8199/A2-IntroComp/tree/main}.
+Este trabalho analisa dados de sessões de cinema no Brasil usando Python e as bibliotecas \texttt{pandas}, \texttt{matplotlib} e \texttt{seaborn}. Quanto aos entregáveis, foram desenvolvidas respostas para cinco questões propostas juntamente a produção de tabelas e gráficos que trazem novos \textit{insights} acerca da base de dados. Essas análises incluem o cálculo de métricas como público total, média do público, desvio do público médio, tempo útil de exibição, distribuição geográfica das sessões, entre outras. As visualizações buscam destacar padrões como a concentração regional do público, variações no tempo de exibição entre países e diferenças entre filmes brasileiros e estrangeiros. O código-fonte, com versionamento ativo, está disponível no GitHub: \url{https://github.com/Gontijo8199/A2-IntroComp/tree/main}.
 \end{abstract}
 \pagebreak
 \section{Introdução}
@@ -62,8 +62,8 @@ O arquivo \texttt{bilheteria.db} contém sete tabelas utilizadas como base de da
     \item \texttt{filme}: Possui 514 linhas e as colunas \texttt{id}, \texttt{titulo\_original}, \texttt{titulo\_br}, \texttt{cpb\_roe}, \texttt{pais\_origem} e \texttt{from\_distribuidora}, contendo informações detalhadas sobre cada filme exibido.
 \end{itemize}
 \pagebreak
-\section{Análise do Código}
-Nesta seção, cada aspecto que compõe a Parte 1 do trabalho será analisado de forma minuciosa, ou seja, as cinco questões propostas e os módulos de apoio apresentados.
+\subsection{Análise do Código e das Questões da Parte 1}
+Nesta subseção, cada aspecto que compõe a Parte 1 do trabalho será analisado de forma minuciosa, ou seja, as cinco questões propostas e os módulos de apoio apresentados.
 \subsection*{Módulo Auxiliar A2}
 O Modulo \texttt{ModuloA2.py} foi importado em ambos arquivos \texttt{a2\_parte1.py} e \texttt{a2\_parte2.py}.
 
@@ -237,7 +237,7 @@ Na \textbf{Questão 5}, além de \texttt{merge()} e \texttt{rename()}, foi criad
 
 \pagebreak
 \linespread{1.5}
-\section{Visualizações}
+\section{Análise estatística descritiva dos dados}
 \subsection*{Visualização 1:}
 \begin{figure}[H]
     \centerline{\includegraphics[width =\linewidth]{img/Figure_1.png}}
@@ -283,8 +283,8 @@ No código, os dados são agrupados por filme, somando público e salas, e filtr
 A visualização foi dividida em dois gráficos de barras horizontais:
 
 \begin{itemize}
-    \item À esquerda, compara-se a bilheteria do cinema brasileiro no cenário global, destacando o Brasil com cor diferente para facilitar a identificação.
-    \item À direita, apresenta-se a bilheteria no cenário nacional, com destaque para as três cidades com maior público, realçadas em cor distinta.
+    \item À esquerda, apresenta-se a bilheteria de filmes no cenário nacional por país de origem, destacando o Brasil com cor diferente para facilitar a identificação.
+    \item À direita, apresenta-se a bilheteria de filmes brasileiros nas unidades da federação, com destaque para as três cidades com maior público, realçadas em cor distinta.
 \end{itemize}
 
 Essa diferenciação de cores tem o objetivo de garantir uma visualização clara e objetiva, facilitando a interpretação dos dados para o público-alvo.
@@ -293,7 +293,7 @@ Essa diferenciação de cores tem o objetivo de garantir uma visualização clar
 
 No código, os dados são agrupados e somados para público e salas por filme, e então agrupados por país de origem para o gráfico global. No gráfico nacional, são filtradas as sessões de filmes brasileiros, somando o público por município e selecionando as dez cidades com maior bilheteria. A categorização das três principais cidades permite seu destaque visual.
 
-Os gráficos usam escala linear, cores contrastantes e legendas removidas para evitar poluição visual. O uso de \texttt{seaborn.barplot} facilita a criação das barras horizontais com as categorias destacadas. As anotações numéricas ao lado das barras indicam os valores exatos, melhorando a compreensão dos dados. A grade tracejada e a padronização das fontes garantem legibilidade e estética consistentes.
+O uso de \texttt{seaborn.barplot} facilita a criação das barras horizontais com as categorias destacadas. As anotações numéricas ao lado das barras indicam os valores exatos, melhorando a compreensão dos dados. A grade tracejada e a padronização das fontes garantem legibilidade e estética consistentes.
 
 
 \subsection*{Visualização 4:}
@@ -305,13 +305,12 @@ O código realiza múltiplos \texttt{merge} entre as tabelas \texttt{sessao}, \t
 
 A contagem decrescente de filmes exibidos por no mínimo determinado número de dias é calculada para cada continente, permitindo comparar a longevidade média dos filmes por região. A visualização evidencia que a América do Norte mantém filmes em exibição por períodos significativamente maiores, enquanto continentes como África e Oceania apresentam ciclos de exibição mais curtos.
 
-\section{Tabelas}
 
 \subsection*{Tabela 1}
 
 \begin{table}[H]
 \centering
-\caption{Tempo útil médio de exibição por país de origem}
+\caption{Tempo útil médio de exibição por país de origem\\}
 \begin{small}
 \begin{tabular}{l r}
 \hline
@@ -341,11 +340,11 @@ HOLANDA & 41.00 \\
 \end{center}
 
 \end{table}
- 
- Essa tabela apresenta o tempo útil médio (em dias) que os filmes permanecem em exibição nos cinemas,
-agrupados por país de origem. Esse indicador permite avaliar a longevidade média das produções cinematográficas de cada país.
+A tabela apresenta o tempo útil médio de exibição dos filmes por país de origem, em dias, com base nos registros de sessões de cinema. O cálculo considerou a diferença entre a primeira e a última exibição de cada filme, obtida após a junção de tabelas com informações de filmes, salas e complexos. As datas foram tratadas com \texttt{pd.to\_datetime()} e, posteriormente, os tempos foram agregados por país, utilizando média aritmética.
 
-Com ela, pode-se notar que o tempo médio de exibição não segue estritamente o tamanho ou poder da indústria cinematográfica.
+
+ 
+A partir da análise da tabela pode-se notar que o tempo médio de exibição não segue estritamente o tamanho ou poder da indústria cinematográfica.
 Isso porque, países menos centrais em termos de volume de produção podem ter filmes com maior longevidade. Enquanto grandes produtores,
 como os EUA, mesmo com forte presença global, apresentam tempos mais moderados, possivelmente devido à maior rotatividade de lançamentos.
 
@@ -354,7 +353,7 @@ como os EUA, mesmo com forte presença global, apresentam tempos mais moderados,
 
 \begin{table}[H]
 \centering
-\caption{Estatísticas de público por filme: média, desvio padrão, moda do dia da semana, semana do mês e mês de exibição}
+\caption{Estatísticas de público por filme: média, desvio padrão, moda do dia da semana, semana do mês e mês de exibição\\}
 \begin{small}
 \begin{tabularx}{\textwidth}{X r r l c c}
 \hline
@@ -377,19 +376,17 @@ ENCANTO & 160.00 & --- & Quarta-feira & 2 & 12 \\
 $\ldots$
 \end{center}
 \end{table}
+A tabela apresenta um conjunto de estatísticas descritivas sobre o desempenho de público por filme, incluindo a média, o desvio padrão e a moda de três variáveis temporais: dia da semana, semana do mês e mês do ano. O cálculo foi realizado a partir da base de sessões, com junções das tabelas de filmes, salas e complexos para enriquecimento dos dados. As datas foram convertidas para o formato de data utilizando \texttt{pd.to\_datetime()}, e novas colunas categóricas foram derivadas para representar o dia da semana, o número da semana dentro do mês e o mês do ano. As funções de moda foram implementadas de forma personalizada para garantir o funcionamento em casos de ausência de valor ou outras exceções.
 
-Esta tabela apresenta um conjunto de estatísticas descritivas sobre o desempenho de diferentes 
-filmes em termos de público. Os dados analisam a média de público, o desvio padrão, e a moda para três variáveis: dia, semana e mês do ano.
+A análise destaca que o filme Fale Comigo obteve a maior média de público (227,83), mas também o maior desvio padrão (299,91), indicando alta variabilidade na ocupação das sessões. Além disso, observa-se um padrão de concentração de público nas quintas-feiras, sugerindo influência de estratégias de lançamento ou de programação das redes exibidoras.
 
-Nela, podemos observar que o filme "Fale comigo" apresenta a maior média de público (227,83), mas 
-também o maior desvio padrão (299,91), indicando forte variação nas sessões.
 
 \begin{landscape}
 \subsection*{Tabela 3}
 \begin{table}[H]
 \centering
 \small
-\caption{Métricas de Exibição por Distribuidora}
+\caption{Métricas de Exibição por Distribuidora\\}
 \begin{tabular}{p{5cm}rrrrr}
 \hline
 \textbf{Distribuidora} & \textbf{Público} & \textbf{Total de Sessões} & \textbf{Média por Sessão} & \textbf{Desvio ($\sigma$)} & \textbf{Tempo Útil Médio (dias)} \\
@@ -421,31 +418,41 @@ $\ldots$
 \end{table}
 \end{landscape}
 
+Esta tabela reúne estatísticas que avaliam o desempenho das principais distribuidoras no mercado brasileiro, considerando volume total de público, número de sessões, média e desvio padrão do público por sessão, além do tempo útil médio de exibição dos filmes.
 
-Esta tabela fornece estatísticas que ajudam a entender o desempenho das principais distribuidoras 
-de filmes no mercado, considerando tanto o volume de público quanto o padrão de exibição.Esses dados
-são úteis para entender tanto o alcance quanto o comportamento de exibição dos filmes conforme a estratégia de distribuição adotada.
+Tecnicamente, os dados foram consolidados por meio de múltiplas junções entre as tabelas de sessões, filmes, salas, complexos e distribuidoras. A conversão das datas permitiu calcular o tempo útil de cada filme pela diferença entre a primeira e última exibição. Em seguida, os indicadores foram agregados por distribuidora, possibilitando uma análise de alcance e duração de exibição, destacando a WARREN BROS. (SOUTH) INC como líder nos principais indicadores.
 
-Nele podemos ver que quem lidera em todos os aspectos é a WARREN BROS. (SOUTH) INC, com ela
-contendo o maior público, maior número de sessões, e o maior tempo útil médio.
 
 \section*{Conclusão}
 
-Através desse trabalho, podemos fazer uma análise abrangente sobre o desempenho da cinematografia ao redor do mundo,
-com ênfase em métricas de bilheteria, tempo de exibição, distribuição geográfica e estratégias de distribuidoras.
+Através deste trabalho, foi possível realizar uma análise abrangente sobre o desempenho da cinematografia ao redor do mundo, com ênfase em métricas de bilheteria, tempo de exibição, distribuição geográfica e estratégias de distribuidoras.
 
-Por meio das visualizações, podemos tirar conclusões muito interessantes, como a de que a quinta-feira aparece com 
-destaque como o dia mais comum de estreia e exibição de pico, alinhando-se com as práticas tradicionais do setor cinematográfico. E que
-filmes com maior média de público (como Fale Comigo e Godzilla Minus One) possuem também altos desvios, sugerindo sessões com grande variação de lotação.
+Por meio das visualizações e tabelas, destacam-se conclusões interessantes, como o protagonismo das quintas-feiras nas estreias e picos de público, alinhado às práticas tradicionais do setor cinematográfico. Além disso, é possivél notar que filmes com maior média de público, como Fale Comigo ou Godzilla Minus One, apresentam altos desvios, indicando grande variação na lotação das sessões.
 
-Os dados também revelam que o mercado de cinema no Brasil possui forte concentração regional e disparidade na longevidade dos filmes,
-especialmente quando comparado a outros países. Desse modo, a cinematografia brasileira mostra-se competitiva internacionalmente e com espaço para crescimento.
+Embora existam estados com maior concentração de público para filmes brasileiros, os dados evidenciam a hegemonia das produções norte-americanas em quase todos os aspectos de consumo, seja em alcance nacional, número de salas ou volume de público. 
 
+\pagebreak
 \begin{thebibliography}{99}
 
-\bibitem{ref1}
-Autor, A. (Ano). \textit{Título do Livro}. Editora.
+\bibitem{seaborn_examples}
+Seaborn Development Team (2024). \textit{Seaborn Example Gallery}. Disponível em: \url{https://seaborn.pydata.org/examples/index.html}.
+
+\bibitem{matplotlib_gallery}
+Matplotlib Development Team (2024). \textit{Matplotlib Example Gallery}. Disponível em: \url{https://matplotlib.org/stable/gallery/index.html}.
+
+\bibitem{matplotlib_colors}
+Matplotlib Development Team (2024). \textit{Named Colors in Matplotlib}. Disponível em: \url{https://matplotlib.org/stable/gallery/color/named_colors.html}.
+
+\bibitem{matplotlib_colormaps}
+Matplotlib Development Team (2024). \textit{Colormaps in Matplotlib}. Disponível em: \url{https://matplotlib.org/stable/users/explain/colors/colormaps.html}.
+
+\bibitem{tufte_visual_display}
+Tufte, E. R. (2001). \textit{The Visual Display of Quantitative Information} (2ª ed.). Cheshire, CT: Graphics Press.
+
+\bibitem{tufte_visual_explanations}
+Tufte, E. R. (1997). \textit{Visual Explanations: Images and Quantities, Evidence and Narrative}. Cheshire, CT: Graphics Press.
 
 \end{thebibliography}
+
 
 \end{document}
