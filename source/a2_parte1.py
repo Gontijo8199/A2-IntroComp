@@ -19,16 +19,10 @@ def questao1(database):
     dados = PATH / database
 
     dsessao = a2.carrega_tabela(dados, 'sessao')
-    
-    # agrupa por filme a soma dos publicos de todas as sessões
-    dfsessao = dsessao.groupby(by=['filme_id'])['publico'].sum().reset_index() 
+    total_bilheteria = dsessao['publico'].sum()
 
-    dfilme = a2.carrega_tabela(dados, 'filme')
-    
-    map_titulo = lambda x: dfilme.loc[dfilme['id'] == x, 'titulo_original'].item() # id -> nome do filme
-    dfsessao['filme_id'] =  dfsessao['filme_id'].map(map_titulo).astype(str)
-    
-    return dfsessao
+    return total_bilheteria
+
 
 '''
 2. Qual o filme de maior bilheteria em 2023, por país de origem?
