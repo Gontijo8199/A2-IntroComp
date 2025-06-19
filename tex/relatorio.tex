@@ -105,7 +105,7 @@ if __name__ == '__main__':
 \pagebreak
 \linespread{1.5}
 \subsection*{Questão 1}
-Na \textbf{Questão 1}, foi utilizado o método \texttt{groupby()} para agrupar os dados por \texttt{filme\_id} e calcular a soma do público com \texttt{sum()}. O método \texttt{reset\_index()} foi aplicado para transformar o índice em coluna. A função \texttt{map()} foi usada para substituir os IDs dos filmes pelos respectivos títulos, com apoio do método \texttt{loc[]}.  \footnote{O método \texttt{loc[]} permite selecionar linhas e colunas com base em rótulos ou condições.}
+Na \textbf{Questão 1}, foi utilizado o método \texttt{sum()} para calcular a \textbf{bilheteria total}, somando todos os valores da coluna \texttt{publico} da tabela \texttt{sessao}. Essa coluna representa o número de espectadores em cada sessão registrada no banco de dados. Ao somar todos os valores dessa coluna, obtém-se o total acumulado de público de todos os filmes exibidos.
 
 \linespread{1}
 \begin{lstlisting}
@@ -114,13 +114,9 @@ def questao1(database):
     dados = PATH / database
 
     dsessao = a2.carrega_tabela(dados, 'sessao')
-    dfsessao = dsessao.groupby(by=['filme_id'])['publico'].sum().reset_index() 
-    dfilme = a2.carrega_tabela(dados, 'filme')
-    
-    map_titulo = lambda x: dfilme.loc[dfilme['id'] == x, 'titulo_original'].item() # id -> nome do filme
-    dfsessao['filme_id'] =  dfsessao['filme_id'].map(map_titulo).astype(str)
-    
-    return dfsessao
+    total_bilheteria = dsessao['publico'].sum()
+
+    return total_bilheteria
 \end{lstlisting}
 \linespread{1.5}
 \subsection*{Questão 2}
