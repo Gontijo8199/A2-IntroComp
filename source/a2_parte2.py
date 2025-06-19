@@ -1,3 +1,6 @@
+AUTORES = ['Nathan Loose Kuipper', 'Rafael Gontijo Ferreira']
+
+
 import math
 from pathlib import Path
 
@@ -8,6 +11,7 @@ import matplotlib.colors as mcolors
 import matplotlib.dates as mdates
 import matplotlib.ticker as mticker
 from matplotlib.patches import Rectangle
+
 import seaborn as sns
 import statsmodels.api as sm
 
