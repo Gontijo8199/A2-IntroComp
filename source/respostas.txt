@@ -13,61 +13,55 @@ Questão 1:
 514                                      THE CHOSEN   114826
 
 [515 rows x 2 columns]
-
 Questão 2: 
                BRASIL        PORTUGAL  ...      ESLOVÊNIA     SUÍÇA
 nome     NOSSO SONHO  A ÚLTIMA FESTA  ...  PICCOLO CORPO  LA LIGNE
 publico       485818            1608  ...             43       543
 
 [2 rows x 40 columns]
-
 Questão 3: 
-                 municipio  BILHETERIA
-309             SÃO PAULO    13310470
-263        RIO DE JANEIRO     8496306
-49               BRASÍLIA     3272437
-40         BELO HORIZONTE     3009414
-94               CURITIBA     2965114
-..                    ...         ...
-24              ARAÇATUBA      247992
-338  VITÓRIA DA CONQUISTA      246490
-244          PONTA GROSSA      241142
-175      LAURO DE FREITAS      240784
-17              ARAPIRACA      222245
+                municipio  BILHETERIA
+0              SÃO PAULO    13310470
+1         RIO DE JANEIRO     8496306
+2               BRASÍLIA     3272437
+3         BELO HORIZONTE     3009414
+4               CURITIBA     2965114
+..                   ...         ...
+95             ARAÇATUBA      247992
+96  VITÓRIA DA CONQUISTA      246490
+97          PONTA GROSSA      241142
+98      LAURO DE FREITAS      240784
+99             ARAPIRACA      222245
 
 [100 rows x 2 columns]
-
 Questão 4: 
-                        CIDADE                   FILME  BILHETERIA
-32090               SÃO PAULO                  BARBIE     1201206
-26663          RIO DE JANEIRO                  BARBIE      719539
-4937                 BRASÍLIA                  BARBIE      289033
-3575           BELO HORIZONTE                  BARBIE      283911
-9524                 CURITIBA                  BARBIE      269314
-...                       ...                     ...         ...
-6948             CAMPOS NOVOS                  FAST X         654
-20133              MOGI-GUACU       THE EXPENDABLES 4         601
-9774            CÓRREGO FUNDO  FRANCO NO TREM DO MEDO          53
-22063                   PAINS  FRANCO NO TREM DO MEDO          51
-28561  SANTO ANTÔNIO DO MONTE      BEM VINDOS DE NOVO          47
+                      CIDADE                   FILME  BILHETERIA
+0                 SÃO PAULO                  BARBIE     1201206
+1            RIO DE JANEIRO                  BARBIE      719539
+2                  BRASÍLIA                  BARBIE      289033
+3            BELO HORIZONTE                  BARBIE      283911
+4                  CURITIBA                  BARBIE      269314
+..                      ...                     ...         ...
+340            CAMPOS NOVOS                  FAST X         654
+341              MOGI-GUACU       THE EXPENDABLES 4         601
+342           CÓRREGO FUNDO  FRANCO NO TREM DO MEDO          53
+343                   PAINS  FRANCO NO TREM DO MEDO          51
+344  SANTO ANTÔNIO DO MONTE      BEM VINDOS DE NOVO          47
 
 [345 rows x 3 columns]
-
 Questão 5: 
- tipo                 CIDADE  BILHETERIA_BR  BILHETERIA_ESTRANGEIRA
-0                    ACARAÚ         1650.0                 46793.0
-1                     AGUAÍ          260.0                 12264.0
-2                ALAGOINHAS         2755.0                 51018.0
-3                   ALFENAS          773.0                 41387.0
-4                  ALTAMIRA          500.0                 38023.0
+                      CIDADE  BILHETERIA_BR  BILHETERIA_ESTRANGEIRA
+0                 SÃO PAULO       13310470                12907219
+1            RIO DE JANEIRO        8496306                 7949517
+2                  BRASÍLIA        3272437                 3192315
+3            BELO HORIZONTE        3009414                 2910668
+4                  CURITIBA        2965114                 2918732
 ..                      ...            ...                     ...
-340           VOLTA REDONDA        10134.0                337000.0
-341              VOTORANTIM         7584.0                364723.0
-342           VÁRZEA GRANDE         3517.0                139581.0
-343         VÁRZEA PAULISTA         1060.0                 57957.0
-344   ÁGUAS LINDAS DE GOIÁS          901.0                 82694.0
+340              MOGI-GUACU           1971                    1373
+341          JOÃO MONLEVADE           1452                    1200
+342  SANTO ANTÔNIO DO MONTE            126                       0
+343           CÓRREGO FUNDO            123                       0
+344                   PAINS             72                       0
 
 [345 rows x 3 columns]
-
-
 feito por:  Nathan Loose Kuipper ,  Rafael Gontijo Ferreira

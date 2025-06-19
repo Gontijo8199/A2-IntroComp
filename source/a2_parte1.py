@@ -97,7 +97,7 @@ def questao3(database):
     cidades = cidades.rename(columns={'publico': 'BILHETERIA'})
 
     # Selecionar as 100 cidades com a maior bilheteria
-    top100 = cidades.sort_values('BILHETERIA', ascending=False).head(100)
+    top100 = cidades.sort_values('BILHETERIA', ascending=False).head(100).reset_index(drop=True)
 
     return top100
 
@@ -137,7 +137,7 @@ def questao4(database):
     # pega o top 1 de cada cidade
     resultado = bilheteria.sort_values('BILHETERIA', ascending=False).groupby('CIDADE').head(1)
 
-    return resultado[['CIDADE', 'FILME', 'BILHETERIA']]
+    return resultado[['CIDADE', 'FILME', 'BILHETERIA']].reset_index(drop=True)
 
 
     
@@ -149,9 +149,8 @@ BILHETERIA_BR, BILHETERIA_ESTRANGEIRA
 '''  
 
 def questao5(database):
-
     dados = PATH / database
-    
+
     dsessao = a2.carrega_tabela(dados, 'sessao')
     dsala = a2.carrega_tabela(dados, 'sala')[['id', 'from_complexo']]
     dcomplexo = a2.carrega_tabela(dados, 'complexo')[['id', 'municipio']]
@@ -161,28 +160,46 @@ def questao5(database):
     df = dsessao.merge(dsala, left_on='sala_id', right_on='id', how='left')
     df = df.rename(columns={'id_x': 'sessao_id', 'id_y': 'sala_id'})
 
-    # Juntar com complexo para obter a cidade
+    # Junta com complexo para pegar cidade
     df = df.merge(dcomplexo, left_on='from_complexo', right_on='id', how='left')
     df = df.rename(columns={'municipio': 'CIDADE'})
 
-    # Juntar com filme para saber de qual cidade é qual
+    # Junta com filme para saber o país de origem
     df = df.merge(dfilme, left_on='filme_id', right_on='id', how='left')
 
-    # Cria uma coluna de tipo do filme (se é BR ou ESTRANGEIRO)
-    df['tipo'] = df['pais_origem'].apply(lambda x: 'BR' if isinstance(x, str) and 'BRASIL' in x else 'ESTRANGEIRO')
+    # Classificar tipo de filme
+    def classificar_tipo(pais):
+        if isinstance(pais, str):
+            paises = [p.strip().upper() for p in pais.split(',')]
+            if len(paises) == 1 and paises[0] == 'BRASIL':
+                return 'BR'
+        return 'ESTRANGEIRO'
 
-    # Agrupar por cidade e tipo de filme
-    bilheteria = df.groupby(['CIDADE', 'tipo'], as_index=False)['publico'].sum()
+    df['tipo'] = df['pais_origem'].apply(classificar_tipo)
 
-    # Pivotar a tabela para colunas separadas
-    tabela_final = bilheteria.pivot(index='CIDADE', columns='tipo', values='publico').fillna(0)
+    bilheteria_estrangeira = (
+        df[df['tipo'] == 'ESTRANGEIRO']
+        .groupby('CIDADE', as_index=False)['publico']
+        .sum()
+        .rename(columns={'publico': 'BILHETERIA_ESTRANGEIRA'})
+    )
 
-    tabela_final = tabela_final.rename(columns={'BR': 'BILHETERIA_BR', 'ESTRANGEIRO': 'BILHETERIA_ESTRANGEIRA'}).reset_index()
-    
+    bilheteria_total = (
+        df.groupby('CIDADE', as_index=False)['publico']
+        .sum()
+        .rename(columns={'publico': 'BILHETERIA_BR'})
+    )
 
-    return tabela_final
+    resultado = bilheteria_total.merge(
+        bilheteria_estrangeira, on='CIDADE', how='left'
+    ).fillna(0)
 
+    resultado['BILHETERIA_ESTRANGEIRA'] = resultado['BILHETERIA_ESTRANGEIRA'].astype(int)
+    resultado['BILHETERIA_BR'] = resultado['BILHETERIA_BR'].astype(int)
 
+    resultado = resultado.sort_values(by='BILHETERIA_BR', ascending=False).reset_index(drop=True)
+
+    return resultado
 
 
 def main():

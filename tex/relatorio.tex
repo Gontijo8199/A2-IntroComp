@@ -82,14 +82,13 @@ from pathlib import Path
 
 PATH =  Path(__file__).parent # bilheteria.db na mesma pasta que esse arquivo
 
-def queryconn(database, query):
+def queryconn(database, query):    
     with sqlite3.connect(database) as conn:
         cursor = conn.cursor()
-        cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-        tables = cursor.fetchall() # caso precise
-
+        # cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+        # tables = cursor.fetchall() 
         df = pd.read_sql_query(query, conn)
-        
+
         return df
     
 def carrega_tabela(database, tabela):
@@ -110,14 +109,15 @@ Na \textbf{Questão 1}, foi utilizado o método \texttt{groupby()} para agrupar 
 
 \linespread{1}
 \begin{lstlisting}
-def questao1():
+def questao1(database):
     
-    dsessao = a2.carrega_tabela(PATH / 'bilheteria.db', 'sessao')
-    dfsessao = dsessao.groupby(by=['filme_id'])['publico'].sum().reset_index()
+    dados = PATH / database
 
-    dfilme = a2.carrega_tabela(PATH / 'bilheteria.db', 'filme')
+    dsessao = a2.carrega_tabela(dados, 'sessao')
+    dfsessao = dsessao.groupby(by=['filme_id'])['publico'].sum().reset_index() 
+    dfilme = a2.carrega_tabela(dados, 'filme')
     
-    map_titulo = lambda x: dfilme.loc[dfilme['id'] == x, 'titulo_original'].item()
+    map_titulo = lambda x: dfilme.loc[dfilme['id'] == x, 'titulo_original'].item() # id -> nome do filme
     dfsessao['filme_id'] =  dfsessao['filme_id'].map(map_titulo).astype(str)
     
     return dfsessao
@@ -127,24 +127,26 @@ def questao1():
 Na \textbf{Questão 2}, novamente foi usado \texttt{groupby()} com \texttt{sum()} para calcular o público total por filme. O método \texttt{merge()}\footnote{No método \texttt{merge()}, o parâmetro \texttt{left\_on} especifica a coluna da tabela esquerda usada para junção, enquanto \texttt{right\_on} indica a coluna correspondente da tabela direita. O parâmetro \texttt{how} determina o tipo de junção: \texttt{'left'} mantém todas as linhas da tabela esquerda, incorporando as correspondências da direita; \texttt{'right'} faz o oposto; \texttt{'inner'} retorna apenas as linhas correspondentes em ambas; e \texttt{'outer'} retorna todas as linhas de ambas as tabelas, preenchendo com \texttt{NaN} onde não há correspondência.} integrou os dados das sessões com a tabela de filmes. O \texttt{fillna(0)} garantiu que filmes sem sessões tivessem público zero. A ordenação foi feita com \texttt{sort\_values()} e a seleção do maior foi realizada com \texttt{iloc[0]}.
 \linespread{1}
 \begin{lstlisting}
-  def questao2():
-    dfilme = a2.carrega_tabela(PATH / 'bilheteria.db', 'filme')
-    dsessao = a2.carrega_tabela(PATH / 'bilheteria.db', 'sessao')
+def questao2(database):
+
+    dados = PATH / database
+
+    dfilme = a2.carrega_tabela(dados, 'filme')
+    dsessao = a2.carrega_tabela(dados, 'sessao')
     dfsessao = dsessao.groupby(by=['filme_id'])['publico'].sum().reset_index()
     merged_df = dfilme.merge(dfsessao, left_on='id', right_on='filme_id', how='left')
     merged_df['publico'] = merged_df['publico'].fillna(0)
     
     paises = merged_df['pais_origem'].unique()
-    dic = {}
     
-    for pais in paises:
+    dic = {}
+    for pais in paises:        
         most_viewed_film = merged_df[merged_df['pais_origem'] == pais].sort_values(by='publico', ascending=False).iloc[0]
         dic[pais] = {
             'nome': dfilme.loc[dfilme['id'] == most_viewed_film['filme_id'], 'titulo_original'].item(),
             'publico': int(most_viewed_film['publico'])
         }
-    
-    return dic
+    return pd.DataFrame(dic) 
 \end{lstlisting}
 
 \linespread{1.5}
@@ -153,22 +155,21 @@ Na \textbf{Questão 2}, novamente foi usado \texttt{groupby()} com \texttt{sum()
 Na \textbf{Questão 3}, o método \texttt{merge()} foi usado para unir as tabelas \texttt{sessao}, \texttt{sala} e \texttt{complexo}. O agrupamento por cidade foi feito com \texttt{groupby()} seguido de \texttt{sum()}. O resultado foi ordenado de forma decrescente com \texttt{sort\_values()} e limitado às 100 primeiras linhas com \texttt{head(100)}.
 \linespread{1}
 \begin{lstlisting}
-    def questao3():
+def questao3(database):
+
+    dados = PATH / database
     
-    dsessao = a2.carrega_tabela(PATH / 'bilheteria.db', 'sessao')
-    dsala = a2.carrega_tabela(PATH / 'bilheteria.db', 'sala')[['id', 'from_complexo']]
-    dcomplexo = a2.carrega_tabela(PATH / 'bilheteria.db', 'complexo')[['id', 'municipio']]
+    dsessao = a2.carrega_tabela(dados, 'sessao')
+    dsala = a2.carrega_tabela(dados, 'sala')[['id', 'from_complexo']]
+    dcomplexo = a2.carrega_tabela(dados, 'complexo')[['id', 'municipio']]
 
     df = dsessao.merge(dsala, left_on='sala_id', right_on='id', how='left')
-
-    # junta o dataframe anterior com o dcomplexo para obter as cidades
     df = df.merge(dcomplexo, left_on='from_complexo', right_on='id', how='left')
 
     cidades = df.groupby('municipio', as_index=False)['publico'].sum()
-
     cidades = cidades.rename(columns={'publico': 'BILHETERIA'})
 
-    top100 = cidades.sort_values('BILHETERIA', ascending=False).head(100)
+    top100 = cidades.sort_values('BILHETERIA', ascending=False).head(100).reset_index(drop=True)
 
     return top100
 \end{lstlisting}
@@ -177,12 +178,14 @@ Na \textbf{Questão 3}, o método \texttt{merge()} foi usado para unir as tabela
 Na \textbf{Questão 4}, as tabelas foram integradas usando \texttt{merge()}. O método \texttt{rename()} foi aplicado para ajustar os nomes das colunas. O agrupamento por cidade e filme usou \texttt{groupby()} com \texttt{sum()}, seguido de uma ordenação com \texttt{sort\_values()} e seleção do filme de maior bilheteria em cada cidade usando \texttt{groupby().head(1)}.
 \linespread{1}
 \begin{lstlisting}
-    def questao4():
+def questao4(database):
+
+    dados = PATH / database
     
-    dsessao = a2.carrega_tabela(PATH / 'bilheteria.db', 'sessao')
-    dsala = a2.carrega_tabela(PATH / 'bilheteria.db', 'sala')[['id', 'from_complexo']]
-    dcomplexo = a2.carrega_tabela(PATH / 'bilheteria.db', 'complexo')[['id', 'municipio']]
-    dfilme = a2.carrega_tabela(PATH / 'bilheteria.db', 'filme')[['id', 'titulo_original']]
+    dsessao = a2.carrega_tabela(dados, 'sessao')
+    dsala = a2.carrega_tabela(dados, 'sala')[['id', 'from_complexo']]
+    dcomplexo = a2.carrega_tabela(dados, 'complexo')[['id', 'municipio']]
+    dfilme = a2.carrega_tabela(dados, 'filme')[['id', 'titulo_original']]
 
     df = dsessao.merge(dsala, left_on='sala_id', right_on='id', how='left')
     df = df.rename(columns={'id_x': 'sessao_id', 'id_y': 'sala_id'})  
@@ -195,43 +198,62 @@ Na \textbf{Questão 4}, as tabelas foram integradas usando \texttt{merge()}. O m
 
     bilheteria = df.groupby(['CIDADE', 'FILME'], as_index=False)['publico'].sum()
     bilheteria = bilheteria.rename(columns={'publico': 'BILHETERIA'})
-
     resultado = bilheteria.sort_values('BILHETERIA', ascending=False).groupby('CIDADE').head(1)
 
-    return resultado[['CIDADE', 'FILME', 'BILHETERIA']]
+    return resultado[['CIDADE', 'FILME', 'BILHETERIA']].reset_index(drop=True)
 
 \end{lstlisting}
 
 \subsection*{Questão 5}
 \linespread{1.5}
-Na \textbf{Questão 5}, além de \texttt{merge()} e \texttt{rename()}, foi criada uma nova coluna \texttt{tipo} com o método \texttt{apply()} \footnote{O método \texttt{apply()} permite aplicar uma função (como uma \texttt{lambda}) a cada elemento de uma coluna ou linha de um \texttt{DataFrame}.} e uma função \texttt{lambda} para classificar os filmes como \texttt{BR} ou \texttt{ESTRANGEIRO}. Após o \texttt{groupby()} por cidade e tipo de filme, os dados foram reorganizados com \texttt{pivot()} \footnote{O método \texttt{pivot()} reorganiza os dados, transformando valores únicos de uma coluna em novas colunas.} e os valores nulos tratados com \texttt{fillna(0)}.
+Na \textbf{Questão 5}, foi criada a coluna \texttt{tipo} usando \texttt{apply()} e uma função auxiliar para classificar os filmes como BR ou ESTRANGEIRO. Em seguida, a bilheteria estrangeira foi calculada com \texttt{groupby()}, assim como a bilheteria total da cidade. As informações foram unidas com \texttt{merge()} e os valores ausentes tratados com \texttt{fillna(0)}, resultando nas colunas \texttt{CIDADE}, \texttt{BILHETERIA\_BR} e \texttt{BILHETERIA\_ESTRANGEIRA}.
 \linespread{1}
 \begin{lstlisting}
-    def questao5():
-    
-    dsessao = a2.carrega_tabela(PATH / 'bilheteria.db', 'sessao')
-    dsala = a2.carrega_tabela(PATH / 'bilheteria.db', 'sala')[['id', 'from_complexo']]
-    dcomplexo = a2.carrega_tabela(PATH / 'bilheteria.db', 'complexo')[['id', 'municipio']]
-    dfilme = a2.carrega_tabela(PATH / 'bilheteria.db', 'filme')[['id', 'pais_origem']]
+def questao5(database):
+    dados = PATH / database
+
+    dsessao = a2.carrega_tabela(dados, 'sessao')
+    dsala = a2.carrega_tabela(dados, 'sala')[['id', 'from_complexo']]
+    dcomplexo = a2.carrega_tabela(dados, 'complexo')[['id', 'municipio']]
+    dfilme = a2.carrega_tabela(dados, 'filme')[['id', 'pais_origem']]
 
     df = dsessao.merge(dsala, left_on='sala_id', right_on='id', how='left')
     df = df.rename(columns={'id_x': 'sessao_id', 'id_y': 'sala_id'})
 
     df = df.merge(dcomplexo, left_on='from_complexo', right_on='id', how='left')
     df = df.rename(columns={'municipio': 'CIDADE'})
-
     df = df.merge(dfilme, left_on='filme_id', right_on='id', how='left')
 
-    df['tipo'] = df['pais_origem'].apply(lambda x: 'BR' if isinstance(x, str) and 'BRASIL' in x else 'ESTRANGEIRO')
+    # Classificar tipo de filme
+    def classificar_tipo(pais):
+        if isinstance(pais, str):
+            paises = [p.strip().upper() for p in pais.split(',')]
+            if len(paises) == 1 and paises[0] == 'BRASIL':
+                return 'BR'
+        return 'ESTRANGEIRO'
 
-    bilheteria = df.groupby(['CIDADE', 'tipo'], as_index=False)['publico'].sum()
+    df['tipo'] = df['pais_origem'].apply(classificar_tipo)
 
-    tabela_final = bilheteria.pivot(index='CIDADE', columns='tipo', values='publico').fillna(0)
+    bilheteria_estrangeira = (
+        df[df['tipo'] == 'ESTRANGEIRO']
+        .groupby('CIDADE', as_index=False)['publico']
+        .sum()
+        .rename(columns={'publico': 'BILHETERIA_ESTRANGEIRA'})
+    )
+    bilheteria_total = (
+        df.groupby('CIDADE', as_index=False)['publico']
+        .sum()
+        .rename(columns={'publico': 'BILHETERIA_BR'})
+    )
+    resultado = bilheteria_total.merge(
+        bilheteria_estrangeira, on='CIDADE', how='left'
+    ).fillna(0)
 
-    tabela_final = tabela_final.rename(columns={'BR': 'BILHETERIA_BR', 'ESTRANGEIRO': 'BILHETERIA_ESTRANGEIRA'}).reset_index()
-    
+    resultado['BILHETERIA_ESTRANGEIRA'] = resultado['BILHETERIA_ESTRANGEIRA'].astype(int)
+    resultado['BILHETERIA_BR'] = resultado['BILHETERIA_BR'].astype(int)
+    resultado = resultado.sort_values(by='BILHETERIA_BR', ascending=False).reset_index(drop=True)
 
-    return tabela_final
+    return resultado
 
 \end{lstlisting}
 
