@@ -114,24 +114,14 @@ Na \textbf{Questão 1}, foi utilizado o método \texttt{sum()} para calcular a \
 \linespread{1}
 \begin{lstlisting}
 def questao1(database):
-def questao1(database):
     
-    dados = PATH / database
-
-    dsessao = a2.carrega_tabela(dados, 'sessao')
-    dfsessao = dsessao.groupby(by=['filme_id'])['publico'].sum().reset_index() 
-    dfilme = a2.carrega_tabela(dados, 'filme')
-    
-    map_titulo = lambda x: dfilme.loc[dfilme['id'] == x, 'titulo_original'].item() 
-    dfsessao['filme_id'] =  dfsessao['filme_id'].map(map_titulo).astype(str)
-    
-    return dfsessao
     dados = PATH / database
 
     dsessao = a2.carrega_tabela(dados, 'sessao')
     total_bilheteria = dsessao['publico'].sum()
 
     return total_bilheteria
+
 \end{lstlisting}
 \linespread{1.5}
 \subsection*{Questão 2}
