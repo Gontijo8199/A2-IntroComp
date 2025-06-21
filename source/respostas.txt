@@ -1,18 +1,6 @@
 Questão 1: 
-                                            filme_id  publico
-0                                     DURVAL DISCOS      825
-1                                         NOSSO LAR    23090
-2                                           REMOÇÃO       90
-3                      HOJE EU QUERO VOLTAR SOZINHO       18
-4                            O HOMEM DE LAGOA SANTA      531
-..                                              ...      ...
-510             NCT NATION: TO THE WORLD IN CINEMAS     4215
-511                            JOURNEY TO BETHLEHEM     8247
-512                                       PRISCILLA     7904
-513  SEVENTEEN TOUR 'FOLLOW' TO JAPAN: LIVE VIEWING     6140
-514                                      THE CHOSEN   114826
+110153083
 
-[515 rows x 2 columns]
 Questão 2: 
                BRASIL        PORTUGAL  ...      ESLOVÊNIA     SUÍÇA
 nome     NOSSO SONHO  A ÚLTIMA FESTA  ...  PICCOLO CORPO  LA LIGNE

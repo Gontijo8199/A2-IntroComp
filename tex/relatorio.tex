@@ -36,11 +36,11 @@
 \maketitle
 
 \begin{abstract}
-Este trabalho analisa dados de sessões de cinema no Brasil usando Python e as bibliotecas \texttt{pandas}, \texttt{matplotlib} e \texttt{seaborn}. Quanto aos entregáveis, foram desenvolvidas respostas para cinco questões propostas juntamente a produção de tabelas e gráficos que trazem novos \textit{insights} acerca da base de dados. Essas análises incluem o cálculo de métricas como público total, média do público, desvio do público médio, tempo útil de exibição, distribuição geográfica das sessões, entre outras. As visualizações buscam destacar padrões como a concentração regional do público, variações no tempo de exibição entre países e diferenças entre filmes brasileiros e estrangeiros. O código-fonte, com versionamento ativo, está disponível no GitHub: \url{https://github.com/Gontijo8199/A2-IntroComp/tree/main}.
+Este trabalho analisa dados de sessões de cinema no Brasil usando Python e as bibliotecas \texttt{pandas}, \texttt{numpy}, \texttt{matplotlib} e \texttt{seaborn}. Quanto aos entregáveis, foram desenvolvidas respostas para cinco questões propostas juntamente a produção de tabelas e gráficos que trazem novos \textit{insights} acerca da base de dados. Essas análises incluem o cálculo de métricas como público total, média do público, desvio do público médio, tempo útil de exibição, distribuição geográfica das sessões, entre outras. As visualizações buscam destacar padrões como a concentração regional do público, variações no tempo de exibição entre países e diferenças entre filmes brasileiros e estrangeiros. O código-fonte, com versionamento ativo, está disponível no GitHub: \url{https://github.com/Gontijo8199/A2-IntroComp/tree/main}.
 \end{abstract}
 \pagebreak
 \section{Introdução}
-Este trabalho tem como objetivo analisar os dados contidos no arquivo \texttt{bilheteria.db}, referentes a sessões de cinema realizadas em diversos complexos no país. A partir dessas informações, foram respondidas as questões propostas, com a realização de agrupamentos e a geração de visualizações que fornecem \textit{insights} sobre a exibição e o consumo de filmes no Brasil. Utilizando a linguagem \texttt{Python} e bibliotecas como \texttt{pandas}, \texttt{matplotlib} e \texttt{seaborn}, foi feita a limpeza e análise dos dados, além da construção de tabelas e gráficos que facilitam a compreensão do cenário cinematográfico nacional.
+Este trabalho tem como objetivo analisar os dados contidos no arquivo \texttt{bilheteria.db}, referentes a sessões de cinema realizadas em diversos complexos no país. A partir dessas informações, foram respondidas as questões propostas, com a realização de agrupamentos e a geração de visualizações que fornecem \textit{insights} sobre a exibição e o consumo de filmes no Brasil. Utilizando a linguagem \texttt{Python} e bibliotecas como \texttt{numpy}~\cite{numpy_docs},\texttt{pandas}~\cite{pandas_docs}, \texttt{matplotlib}~\cite{matplotlib_docs} e \texttt{seaborn}~\cite{seaborn_docs}, foi feita a limpeza e análise dos dados, além da construção de tabelas e gráficos que facilitam a compreensão do cenário cinematográfico nacional.
 
 \section{Análise exploratória dos dados}
 
@@ -69,7 +69,7 @@ O Modulo \texttt{ModuloA2.py} foi importado em ambos arquivos \texttt{a2\_parte1
 
 Além das funções \texttt{carrega\_tabela} e \texttt{lista\_tabelas}, foi implementada a função \texttt{queryconn}, que recebe como parâmetros o caminho da base de dados e uma consulta SQL. Utiliza o gerenciador de contexto \texttt{with} para abrir uma conexão temporária com o banco, garantindo o fechamento automático dos recursos após a execução.
 
-Dentro da função, é criado um \texttt{cursor}, que permite executar comandos SQL diretamente no banco de dados. O método \texttt{fetchall()} é usado para recuperar todas as linhas resultantes da execução da consulta. A consulta propriamente dita é executada pela função \texttt{read\_sql\_query()}\footnote{A função \texttt{read\_sql\_query()} da biblioteca \texttt{pandas} executa uma consulta SQL em uma conexão de banco de dados e retorna os resultados em um \texttt{DataFrame}, facilitando a manipulação dos dados em Python.}, que retorna os dados diretamente em um \texttt{DataFrame}.
+Dentro da função, é criado um \texttt{cursor}, que permite executar comandos SQL diretamente no banco de dados. O método \texttt{fetchall()} é usado para recuperar todas as linhas resultantes da execução da consulta. A consulta propriamente dita é executada pela função \texttt{read\_sql\_query()}\footnote{A função \texttt{read\_sql\_query()} da biblioteca \texttt{pandas} executa uma consulta SQL em uma conexão de banco de dados e retorna os resultados em um \texttt{DataFrame}, facilitando a manipulação dos dados em Python.}, que retorna os dados diretamente em um \texttt{DataFrame}.~\cite{sqlite3_docs}
 
 
 \linespread{1}
@@ -134,28 +134,21 @@ def questao2(database):
 
     dfilme = a2.carrega_tabela(dados, 'filme')
     dsessao = a2.carrega_tabela(dados, 'sessao')
-def questao2(database):
-
-    dados = PATH / database
-
-    dfilme = a2.carrega_tabela(dados, 'filme')
-    dsessao = a2.carrega_tabela(dados, 'sessao')
     dfsessao = dsessao.groupby(by=['filme_id'])['publico'].sum().reset_index()
+    
     merged_df = dfilme.merge(dfsessao, left_on='id', right_on='filme_id', how='left')
     merged_df['publico'] = merged_df['publico'].fillna(0)
     
     paises = merged_df['pais_origem'].unique()
     
-    
     dic = {}
-    for pais in paises:        
+    
     for pais in paises:        
         most_viewed_film = merged_df[merged_df['pais_origem'] == pais].sort_values(by='publico', ascending=False).iloc[0]
         dic[pais] = {
             'nome': dfilme.loc[dfilme['id'] == most_viewed_film['filme_id'], 'titulo_original'].item(),
             'publico': int(most_viewed_film['publico'])
         }
-    return pd.DataFrame(dic) 
     return pd.DataFrame(dic) 
 \end{lstlisting}
 
@@ -168,13 +161,7 @@ Na \textbf{Questão 3}, o método \texttt{merge()} foi usado para unir as tabela
 def questao3(database):
 
     dados = PATH / database
-def questao3(database):
-
-    dados = PATH / database
     
-    dsessao = a2.carrega_tabela(dados, 'sessao')
-    dsala = a2.carrega_tabela(dados, 'sala')[['id', 'from_complexo']]
-    dcomplexo = a2.carrega_tabela(dados, 'complexo')[['id', 'municipio']]
     dsessao = a2.carrega_tabela(dados, 'sessao')
     dsala = a2.carrega_tabela(dados, 'sala')[['id', 'from_complexo']]
     dcomplexo = a2.carrega_tabela(dados, 'complexo')[['id', 'municipio']]
@@ -186,9 +173,9 @@ def questao3(database):
     cidades = cidades.rename(columns={'publico': 'BILHETERIA'})
 
     top100 = cidades.sort_values('BILHETERIA', ascending=False).head(100).reset_index(drop=True)
-    top100 = cidades.sort_values('BILHETERIA', ascending=False).head(100).reset_index(drop=True)
 
     return top100
+
 \end{lstlisting}
 \linespread{1.5}
 \subsection*{Questão 4}
@@ -198,14 +185,7 @@ Na \textbf{Questão 4}, as tabelas foram integradas usando \texttt{merge()}. O m
 def questao4(database):
 
     dados = PATH / database
-def questao4(database):
-
-    dados = PATH / database
     
-    dsessao = a2.carrega_tabela(dados, 'sessao')
-    dsala = a2.carrega_tabela(dados, 'sala')[['id', 'from_complexo']]
-    dcomplexo = a2.carrega_tabela(dados, 'complexo')[['id', 'municipio']]
-    dfilme = a2.carrega_tabela(dados, 'filme')[['id', 'titulo_original']]
     dsessao = a2.carrega_tabela(dados, 'sessao')
     dsala = a2.carrega_tabela(dados, 'sala')[['id', 'from_complexo']]
     dcomplexo = a2.carrega_tabela(dados, 'complexo')[['id', 'municipio']]
@@ -213,18 +193,16 @@ def questao4(database):
 
     df = dsessao.merge(dsala, left_on='sala_id', right_on='id', how='left')
     df = df.rename(columns={'id_x': 'sessao_id', 'id_y': 'sala_id'})  
-
     df = df.merge(dcomplexo, left_on='from_complexo', right_on='id', how='left')
     df = df.rename(columns={'municipio': 'CIDADE'})
-    
     df = df.merge(dfilme, left_on='filme_id', right_on='id', how='left')
     df = df.rename(columns={'titulo_original': 'FILME'})
 
     bilheteria = df.groupby(['CIDADE', 'FILME'], as_index=False)['publico'].sum()
     bilheteria = bilheteria.rename(columns={'publico': 'BILHETERIA'})
+
     resultado = bilheteria.sort_values('BILHETERIA', ascending=False).groupby('CIDADE').head(1)
 
-    return resultado[['CIDADE', 'FILME', 'BILHETERIA']].reset_index(drop=True)
     return resultado[['CIDADE', 'FILME', 'BILHETERIA']].reset_index(drop=True)
 
 \end{lstlisting}
@@ -232,16 +210,8 @@ def questao4(database):
 \subsection*{Questão 5}
 \linespread{1.5}
 Na \textbf{Questão 5}, foi criada a coluna \texttt{tipo} usando \texttt{apply()} e uma função auxiliar para classificar os filmes como BR ou ESTRANGEIRO. Em seguida, a bilheteria estrangeira foi calculada com \texttt{groupby()}, assim como a bilheteria total da cidade. As informações foram unidas com \texttt{merge()} e os valores ausentes tratados com \texttt{fillna(0)}, resultando nas colunas \texttt{CIDADE}, \texttt{BILHETERIA\_BR} e \texttt{BILHETERIA\_ESTRANGEIRA}.
-Na \textbf{Questão 5}, foi criada a coluna \texttt{tipo} usando \texttt{apply()} e uma função auxiliar para classificar os filmes como BR ou ESTRANGEIRO. Em seguida, a bilheteria estrangeira foi calculada com \texttt{groupby()}, assim como a bilheteria total da cidade. As informações foram unidas com \texttt{merge()} e os valores ausentes tratados com \texttt{fillna(0)}, resultando nas colunas \texttt{CIDADE}, \texttt{BILHETERIA\_BR} e \texttt{BILHETERIA\_ESTRANGEIRA}.
 \linespread{1}
 \begin{lstlisting}
-def questao5(database):
-    dados = PATH / database
-
-    dsessao = a2.carrega_tabela(dados, 'sessao')
-    dsala = a2.carrega_tabela(dados, 'sala')[['id', 'from_complexo']]
-    dcomplexo = a2.carrega_tabela(dados, 'complexo')[['id', 'municipio']]
-    dfilme = a2.carrega_tabela(dados, 'filme')[['id', 'pais_origem']]
 def questao5(database):
     dados = PATH / database
 
@@ -252,28 +222,16 @@ def questao5(database):
 
     df = dsessao.merge(dsala, left_on='sala_id', right_on='id', how='left')
     df = df.rename(columns={'id_x': 'sessao_id', 'id_y': 'sala_id'})
-
     df = df.merge(dcomplexo, left_on='from_complexo', right_on='id', how='left')
     df = df.rename(columns={'municipio': 'CIDADE'})
     df = df.merge(dfilme, left_on='filme_id', right_on='id', how='left')
 
-    # Classificar tipo de filme
     def classificar_tipo(pais):
         if isinstance(pais, str):
             paises = [p.strip().upper() for p in pais.split(',')]
             if len(paises) == 1 and paises[0] == 'BRASIL':
                 return 'BR'
         return 'ESTRANGEIRO'
-
-    df['tipo'] = df['pais_origem'].apply(classificar_tipo)
-    # Classificar tipo de filme
-    def classificar_tipo(pais):
-        if isinstance(pais, str):
-            paises = [p.strip().upper() for p in pais.split(',')]
-            if len(paises) == 1 and paises[0] == 'BRASIL':
-                return 'BR'
-        return 'ESTRANGEIRO'
-
     df['tipo'] = df['pais_origem'].apply(classificar_tipo)
 
     bilheteria_estrangeira = (
@@ -282,31 +240,13 @@ def questao5(database):
         .sum()
         .rename(columns={'publico': 'BILHETERIA_ESTRANGEIRA'})
     )
+
     bilheteria_total = (
         df.groupby('CIDADE', as_index=False)['publico']
         .sum()
         .rename(columns={'publico': 'BILHETERIA_BR'})
     )
-    resultado = bilheteria_total.merge(
-        bilheteria_estrangeira, on='CIDADE', how='left'
-    ).fillna(0)
 
-    resultado['BILHETERIA_ESTRANGEIRA'] = resultado['BILHETERIA_ESTRANGEIRA'].astype(int)
-    resultado['BILHETERIA_BR'] = resultado['BILHETERIA_BR'].astype(int)
-    resultado = resultado.sort_values(by='BILHETERIA_BR', ascending=False).reset_index(drop=True)
-
-    return resultado
-    bilheteria_estrangeira = (
-        df[df['tipo'] == 'ESTRANGEIRO']
-        .groupby('CIDADE', as_index=False)['publico']
-        .sum()
-        .rename(columns={'publico': 'BILHETERIA_ESTRANGEIRA'})
-    )
-    bilheteria_total = (
-        df.groupby('CIDADE', as_index=False)['publico']
-        .sum()
-        .rename(columns={'publico': 'BILHETERIA_BR'})
-    )
     resultado = bilheteria_total.merge(
         bilheteria_estrangeira, on='CIDADE', how='left'
     ).fillna(0)
@@ -322,13 +262,16 @@ def questao5(database):
 \pagebreak
 \linespread{1.5}
 \section{Análise estatística descritiva dos dados}
+
+Para apoiar a construção das visualizações, foram utilizadas referências da galeria de exemplos do \texttt{seaborn}\cite{seaborn_examples}, da galeria de exemplos do \texttt{matplotlib}~\cite{matplotlib_gallery}, bem como das seções sobre cores~\cite{matplotlib_colors} e mapas de cores~\cite{matplotlib_colormaps} da documentação oficial do \texttt{matplotlib}. Além disso, conceitos apresentados por Edward Tufte nos materiais abordados na disciplina de Introdução à Ciência de Dados também serviram como base teórica~\cite{tufte_visual_display}\cite{tufte_visual_explanations}.
+
 \subsection*{Visualização 1:}
 \begin{figure}[H]
     \centerline{\includegraphics[width =\linewidth]{img/Figure_1.png}}
 \end{figure}
 A visualização apresenta a variação semanal da média de público ao longo de 2023, com dados diários agregados por data de exibição e convertidos para o tipo \texttt{datetime}. As datas foram transformadas em períodos semanais usando \texttt{dt.to\_period('W')} e uma função \texttt{lambda} para extrair o início da semana, permitindo o cálculo da média, mínimo e máximo de público semanal.
 
-No gráfico, a faixa sombreada criada com \texttt{fill\_between} destaca a variação entre os valores mínimo e máximo, enquanto a linha com marcadores mostra a média semanal. Observa-se grande variação na audiência ao longo do ano, com picos em datas estratégicas, possivelmente relacionados a estreias de filmes e feriados, como o aumento notável registrado em julho. Ajustes no formato do eixo temporal e no estilo visual reforçam a clareza e facilitam a interpretação dos dados.
+No gráfico, a faixa sombreada criada com \texttt{fill\_between} destaca a variação entre os valores mínimo e máximo, enquanto a linha com marcadores mostra a média semanal. Observa-se grande variação na audiência ao longo do ano, com picos em datas estratégicas, possivelmente relacionados a estreias de filmes e feriados, como o aumento notável registrado em julho. Ajustes no formato do eixo temporal e no estilo visual reforçam a clareza e facilitam a interpretação dos dados.~\cite{tufte_visual_display}\cite{tufte_visual_explanations}
 
 
 \subsection*{Visualização 2:}
@@ -358,7 +301,7 @@ Os parâmetros são estimados minimizando o erro quadrático:
 
 com dados \(\{(x_i,y_i)\}\) positivos.
 
-No código, os dados são agrupados por filme, somando público e salas, e filtrados para filmes exibidos em pelo menos 10 salas. As variáveis são transformadas em \(\log_{10}\) para linearizar a relação. Para cada grupo de país (Estados Unidos e estrangeiros), ajusta-se uma regressão linear via \texttt{statsmodels} \texttt{OLS}. O gráfico exibe pontos e linhas de regressão em escala log-log, com cores distintas, facilitando a visualização e destacando diferenças entre os grupos. A grade tracejada e fontes adequadas melhoram a legibilidade.
+No código, os dados são agrupados por filme, somando público e salas, e filtrados para filmes exibidos em pelo menos 10 salas. As variáveis são transformadas em \(\log_{10}\) para linearizar a relação. Para cada grupo de país (Estados Unidos e estrangeiros), ajusta-se uma regressão linear via \texttt{statsmodels} \texttt{OLS}. O gráfico exibe pontos e linhas de regressão em escala log-log, com cores distintas, facilitando a visualização e destacando diferenças entre os grupos. A grade tracejada e fontes adequadas melhoram a legibilidade.~\cite{tufte_visual_display}\cite{tufte_visual_explanations}
 
 \subsection*{Visualização 3:}
 \begin{figure}[H]
@@ -371,13 +314,13 @@ A visualização foi dividida em dois gráficos de barras horizontais:
     \item À direita, apresenta-se a bilheteria de filmes brasileiros nas unidades da federação, com destaque para as três cidades com maior público, realçadas em cor distinta.
 \end{itemize}
 
-Essa diferenciação de cores tem o objetivo de garantir uma visualização clara e objetiva, facilitando a interpretação dos dados para o público-alvo.
+Essa diferenciação de cores tem o objetivo de garantir uma visualização clara e objetiva, facilitando a interpretação dos dados para o público-alvo. 
 
 \vspace{0.3cm}
 
 No código, os dados são agrupados e somados para público e salas por filme, e então agrupados por país de origem para o gráfico global. No gráfico nacional, são filtradas as sessões de filmes brasileiros, somando o público por município e selecionando as dez cidades com maior bilheteria. A categorização das três principais cidades permite seu destaque visual.
 
-O uso de \texttt{seaborn.barplot} facilita a criação das barras horizontais com as categorias destacadas. As anotações numéricas ao lado das barras indicam os valores exatos, melhorando a compreensão dos dados. A grade tracejada e a padronização das fontes garantem legibilidade e estética consistentes.
+O uso de \texttt{seaborn.barplot} facilita a criação das barras horizontais com as categorias destacadas. As anotações numéricas ao lado das barras indicam os valores exatos, melhorando a compreensão dos dados. A grade tracejada e a padronização das fontes garantem legibilidade e estética consistentes.~\cite{tufte_visual_display}\cite{tufte_visual_explanations}
 
 
 \subsection*{Visualização 4:}
@@ -516,27 +459,44 @@ Por meio das visualizações e tabelas, destacam-se conclusões interessantes, c
 Embora existam estados com maior concentração de público para filmes brasileiros, os dados evidenciam a hegemonia das produções norte-americanas em quase todos os aspectos de consumo, seja em alcance nacional, número de salas ou volume de público. 
 
 \pagebreak
+
 \begin{thebibliography}{99}
 
-\bibitem{seaborn_examples}
-Seaborn Development Team (2024). \textit{Seaborn Example Gallery}. Disponível em: \url{https://seaborn.pydata.org/examples/index.html}.
-
-\bibitem{matplotlib_gallery}
-Matplotlib Development Team (2024). \textit{Matplotlib Example Gallery}. Disponível em: \url{https://matplotlib.org/stable/gallery/index.html}.
-
-\bibitem{matplotlib_colors}
-Matplotlib Development Team (2024). \textit{Named Colors in Matplotlib}. Disponível em: \url{https://matplotlib.org/stable/gallery/color/named_colors.html}.
+\bibitem{numpy_docs}
+Harris, C. R., et al. (2020). \textit{Array programming with NumPy}. Nature, 585(7825), 357–362. Documentação disponível em: \url{https://numpy.org/doc/stable/}.
 
 \bibitem{matplotlib_colormaps}
 Matplotlib Development Team (2024). \textit{Colormaps in Matplotlib}. Disponível em: \url{https://matplotlib.org/stable/users/explain/colors/colormaps.html}.
 
-\bibitem{tufte_visual_display}
-Tufte, E. R. (2001). \textit{The Visual Display of Quantitative Information} (2ª ed.). Cheshire, CT: Graphics Press.
+\bibitem{matplotlib_colors}
+Matplotlib Development Team (2024). \textit{Named Colors in Matplotlib}. Disponível em: \url{https://matplotlib.org/stable/gallery/color/named_colors.html}.
+
+\bibitem{matplotlib_docs}
+Matplotlib Development Team (2024). \textit{Matplotlib Documentation}. Disponível em: \url{https://matplotlib.org/stable/contents.html}.
+
+\bibitem{matplotlib_gallery}
+Matplotlib Development Team (2024). \textit{Matplotlib Example Gallery}. Disponível em: \url{https://matplotlib.org/stable/gallery/index.html}.
+
+\bibitem{pandas_docs}
+The Pandas Development Team (2024). \textit{Pandas User Guide}. Disponível em: \url{https://pandas.pydata.org/docs/user_guide/index.html}.
+
+\bibitem{sqlite3_docs}
+Python Software Foundation (2024). \textit{sqlite3 — DB-API 2.0 interface for SQLite databases}. Disponível em: \url{https://docs.python.org/3/library/sqlite3.html}.
+
+\bibitem{seaborn_docs}
+Seaborn Development Team (2024). \textit{Seaborn Documentation}. Disponível em: \url{https://seaborn.pydata.org/}.
+
+\bibitem{seaborn_examples}
+Seaborn Development Team (2024). \textit{Seaborn Example Gallery}. Disponível em: \url{https://seaborn.pydata.org/examples/index.html}.
 
 \bibitem{tufte_visual_explanations}
 Tufte, E. R. (1997). \textit{Visual Explanations: Images and Quantities, Evidence and Narrative}. Cheshire, CT: Graphics Press.
 
+\bibitem{tufte_visual_display}
+Tufte, E. R. (2001). \textit{The Visual Display of Quantitative Information} (2ª ed.). Cheshire, CT: Graphics Press.
+
 \end{thebibliography}
+
 
 
 \end{document}
