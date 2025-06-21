@@ -83,15 +83,11 @@ from pathlib import Path
 PATH =  Path(__file__).parent # bilheteria.db na mesma pasta que esse arquivo
 
 def queryconn(database, query):    
-def queryconn(database, query):    
     with sqlite3.connect(database) as conn:
         cursor = conn.cursor()
         # cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
         # tables = cursor.fetchall() 
-        # cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-        # tables = cursor.fetchall() 
         df = pd.read_sql_query(query, conn)
-
 
         return df
     

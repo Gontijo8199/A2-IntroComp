@@ -4,9 +4,15 @@
 Este repositório contém o trabalho da Avaliação 2 da disciplina de Introdução à Computação. O objetivo deste trabalho é analisar dados de bilheteira de filmes, utilizando Python e SQLite para manipulação e consulta de dados.
 
 ## Estrutura do Projeto
+
 - `source/bilheteria.db`: Banco de dados SQLite contendo informações sobre filmes, sessões e bilheteira.
+
+
 - `source/a2_parte1.py`: Parte 1 da Avaliação 2.
 - `source/a2_parte2.py`: Parte 2 da Avaliação 2.
+
+
+- `source/respostas.txt`: Resultado de rodar o código da parte 1.
 - `source/ModuloA2.py`: Módulo com funções para o manejo da base de dados.
 - `tex/relatorio.tex`: Documento em LaTeX que compila o relatório do trabalho.
 - `tex/relatorio.pdf`: Relatório compilado em um pdf
